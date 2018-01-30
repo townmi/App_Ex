@@ -1,0 +1,200 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context="com.goubaa.harry.nightplus.Views.Me.MeFragment">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:background="@color/colorBackground"
+      android:gravity="center">
+
+      <TextView
+        android:id="@+id/meTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_me_title"
+        android:textColor="@color/colorLightGray"
+        android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/colorBlack"
+      android:orientation="vertical">
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBlack"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+          android:id="@+id/me_email_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_marginLeft="15dp"
+          android:src="@drawable/me_avator" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="8dp"
+          android:layout_toRightOf="@+id/me_email_icon"
+          android:text="harry@126.com"
+          android:textColor="@color/colorTheme"
+          android:textSize="16sp" />
+
+      </RelativeLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/app_me_attention"
+          android:textColor="@color/colorLightGray"
+          android:textSize="10sp" />
+      </LinearLayout>
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorLightBlack"
+        android:padding="8dp">
+
+        <ImageView
+          android:id="@+id/me_rate_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:src="@drawable/me_rate" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_toRightOf="@+id/me_rate_icon"
+          android:paddingLeft="10dp"
+          android:text="@string/app_me_switch"
+          android:textColor="@color/colorLightGray"
+          android:textSize="14sp" />
+
+        <Switch
+          android:id="@+id/me_rate"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_weight="1" />
+      </RelativeLayout>
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorLightBlack"
+        android:padding="8dp">
+
+        <ImageView
+          android:id="@+id/me_ID_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:src="@drawable/me_id" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_toRightOf="@+id/me_ID_icon"
+          android:paddingLeft="10dp"
+          android:text="@string/app_me_id"
+          android:textColor="@color/colorLightGray"
+          android:textSize="14sp" />
+      </RelativeLayout>
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorLightBlack"
+        android:padding="8dp">
+
+        <ImageView
+          android:id="@+id/me_level_auth_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:src="@drawable/me_level_auth" />
+
+        <TextView
+          android:id="@+id/me_level_auth_txt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_toRightOf="@+id/me_level_auth_icon"
+          android:paddingLeft="8dp"
+          android:text="@string/app_me_level_auth"
+          android:textColor="@color/colorLightGray"
+          android:textSize="14sp" />
+
+        <ImageView
+          android:id="@+id/me_level_icon"
+          android:layout_width="22dp"
+          android:layout_height="22dp"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="8dp"
+          android:layout_toRightOf="@+id/me_level_auth_txt"
+          android:src="@drawable/me_level" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_toRightOf="@+id/me_level_icon"
+          android:paddingLeft="8dp"
+          android:text="Lv 1"
+          android:textColor="@color/colorTheme"
+          android:textSize="14sp" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:text="未认证"
+          android:textColor="@color/colorLightGray"
+          android:textSize="14sp" />
+      </RelativeLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      </LinearLayout>
+    </LinearLayout>
+
+  </LinearLayout>
+
+
+</FrameLayout>

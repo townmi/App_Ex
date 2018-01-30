@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="com.goubaa.harry.nightplus.Views.VenueList.VenueListFragment">
+
+  <!-- TODO: Update blank fragment layout -->
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:background="@color/colorBackground"
+      android:gravity="center">
+
+      <TextView
+        android:id="@+id/meTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_venue_list_title"
+        android:textColor="@color/colorLightGray"
+        android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+
+      <TextView
+        android:id="@+id/venue_list_icon_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_icon_search"
+        android:textColor="@color/colorLightGray"
+        android:textSize="16sp" />
+    </LinearLayout>
+  </LinearLayout>
+
+</FrameLayout>
