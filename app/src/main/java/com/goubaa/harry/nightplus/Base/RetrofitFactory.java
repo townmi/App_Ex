@@ -1,12 +1,18 @@
 package com.goubaa.harry.nightplus.Base;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.goubaa.harry.nightplus.Adapter.CityTypeAdapter;
 import com.goubaa.harry.nightplus.Adapter.PostTypeAdapter;
+import com.goubaa.harry.nightplus.Adapter.UserTypeAdapter;
 import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.Post;
+import com.goubaa.harry.nightplus.Models.User;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +34,7 @@ public class RetrofitFactory {
   private static final String BASE_URL = "http://venuescore.staging.ye-dian.com/";
   private static final String VENUES_CORE_BASE_URL = "http://venuescore.staging.ye-dian.com/";
   private static final String COMMUNITY_CORE_BASE_URL = "http://community.staging.ye-dian.com/";
+  private static final String USER_BASE_URL = "http://user.staging.ye-dian.com/";
   private static final long TIMEOUT = 30;
 
   private static OkHttpClient httpClient = new OkHttpClient.Builder()
@@ -35,14 +42,14 @@ public class RetrofitFactory {
       @Override
       public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        builder.addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTc0NTI5MDYsImlzcyI6ImUzZWQwOWQwLWVhMDgtMTFlNy1hYzE0LTZmMDVmZDhlNTU1OSIsImlhdCI6MTUxNjg0ODEwNn0.c9sQWEWFYLmSVkLVIJwfb4evKWdrT4jTb8KrM1T3Peg");
+        builder.addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTgxNDY0OTcsImlzcyI6ImUzZWQwOWQwLWVhMDgtMTFlNy1hYzE0LTZmMDVmZDhlNTU1OSIsImlhdCI6MTUxNzU0MTY5N30.1UBq89-AyxltTs0aovdL-2JHF1Vv0QzRgQMDDzV-w8w");
         return chain.proceed(builder.build());
       }
     })
     .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
       @Override
       public void log(String message) {
-
+        Log.i("HTTP", message);
       }
     }).setLevel(HttpLoggingInterceptor.Level.BASIC))
     .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -76,6 +83,15 @@ public class RetrofitFactory {
     .build()
     .create(RetrofitService.class);
 
+  // user model
+  private static RetrofitService userRetrofitService = new Retrofit.Builder()
+    .baseUrl(USER_BASE_URL)
+    .addConverterFactory(GsonConverterFactory.create(buildUserGson()))
+    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    .client(httpClient)
+    .build()
+    .create(RetrofitService.class);
+
   public static RetrofitService getInstance() {
     return retrofitService;
   }
@@ -88,6 +104,11 @@ public class RetrofitFactory {
     return communityCoreRetrofitService;
   }
 
+  public static RetrofitService getUserRetrofitService() {
+    return userRetrofitService;
+  }
+
+  @NonNull
   private static Gson buildGson() {
     return new GsonBuilder()
       .serializeNulls()
@@ -96,11 +117,21 @@ public class RetrofitFactory {
       .create();
   }
 
+  @NonNull
   private static Gson buildPostGson() {
     return new GsonBuilder()
       .serializeNulls()
       .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
       .registerTypeAdapter(Post.class, new PostTypeAdapter())
+      .create();
+  }
+
+  @NonNull
+  private static Gson buildUserGson() {
+    return new GsonBuilder()
+      .serializeNulls()
+      .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+      .registerTypeAdapter(User.class, new UserTypeAdapter())
       .create();
   }
 }

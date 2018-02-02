@@ -16,7 +16,9 @@ import com.goubaa.harry.nightplus.Base.BaseFragment;
 import com.goubaa.harry.nightplus.Base.BaseObserver;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
 import com.goubaa.harry.nightplus.Models.City;
+import com.goubaa.harry.nightplus.Models.User;
 import com.goubaa.harry.nightplus.R;
+import com.goubaa.harry.nightplus.SessionApplication;
 
 import java.util.ArrayList;
 
@@ -74,8 +76,8 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+    savedInstanceState) {
     // Inflate the layout for this fragment
     return inflater.inflate(R.layout.fragment_me, container, false);
   }
@@ -92,10 +94,13 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     super.onAttach(context);
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
+
+      User user = SessionApplication.getUser();
+
       getStudents("", "");
     } else {
-      throw new RuntimeException(context.toString()
-        + " must implement OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " +
+        "OnFragmentInteractionListener");
     }
   }
 
@@ -148,7 +153,8 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
   private void getStudents(String id, String name) {
 
     Observable<BaseEntity<City>> observable = RetrofitFactory.getInstance().getCities();
-    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new BaseObserver<City>(getContext()) {
+    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new
+                                                                                      BaseObserver<City>(getContext()) {
       @Override
       protected void onHandleSuccess(ArrayList<City> arrayList) {
         City city;
@@ -162,21 +168,18 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         } catch (NullPointerException e) {
           System.out.println("object == null不会导致空指针异常发生");
         }
-        new AlertDialog.Builder(getContext())
-          .setTitle("AJAX Success")
-          .setMessage("userId: " + _id)
-          .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        new AlertDialog.Builder(getContext()).setTitle("AJAX Success").setMessage("userId: " +
+          _id).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
 
-            }
-          })
-          .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+          }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
 
-            }
-          }).create().show();
+          }
+        }).create().show();
       }
     });
   }
