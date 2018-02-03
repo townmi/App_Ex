@@ -1,7 +1,6 @@
 <resources>
   <string name="app_name">Night+</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="app_explores_title">市场</string>
   <string name="app_me_title">我的</string>
@@ -11,7 +10,7 @@
   <string name="app_me_switch">使用BNB支付交易手续费(50%折扣)</string>
   <string name="app_me_id">超级返利</string>
   <string name="app_me_level_auth">身份验证</string>
-
+  <string name="app_introduction_btn">进入APP</string>
 
   <!-- ICONS -->
   <string name="app_icon_search">&#xf157;</string>

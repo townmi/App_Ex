@@ -27,14 +27,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements
-  ViewPager.OnPageChangeListener,
-  View.OnClickListener,
-  ExploresFragment.OnFragmentInteractionListener,
-  MissionFragment.OnFragmentInteractionListener,
-  VenueListFragment.OnFragmentInteractionListener,
-  MeFragment.OnFragmentInteractionListener,
-  ExploresPageFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
+  .OnClickListener, ExploresFragment.OnFragmentInteractionListener, MissionFragment
+  .OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
+  .OnFragmentInteractionListener, ExploresPageFragment.OnFragmentInteractionListener {
 
   @BindView(R.id.main_activity)
   LinearLayout linearLayout;
@@ -48,12 +44,8 @@ public class MainActivity extends BaseActivity implements
 
   private List<Fragment> fragmentList;
 
-  private int[] activeList = {
-    R.drawable.main_tab_explore_active,
-    R.drawable.main_tab_incentives_active,
-    R.drawable.main_tab_mission_active,
-    R.drawable.main_tab_me_active
-  };
+  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable
+    .main_tab_incentives_active, R.drawable.main_tab_mission_active, R.drawable.main_tab_me_active};
 
   private FragmentPagerAdapter adapter;
 

@@ -28,7 +28,11 @@
         <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".Views.MainActivity"></activity>
+    <activity android:name=".Views.MainActivity" />
+    <activity
+      android:name=".Views.IntroductionActivity"
+      android:launchMode="singleTop"
+      android:theme="@style/IntroductionTheme"></activity>
   </application>
 
 </manifest>

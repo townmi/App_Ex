@@ -17,4 +17,12 @@ public class Utils {
     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
     return networkInfo != null && networkInfo.isAvailable();
   }
+
+  /**
+   * GPS 定位
+   */
+
+  public static void GPS(Context context) {
+
+  }
 }

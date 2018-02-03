@@ -2,6 +2,7 @@ package com.goubaa.harry.nightplus;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,26 +23,28 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.functions.Consumer;
 
 public class SessionApplication extends Application {
-
   public static Context mContext;
-
   public static User user;
+  public static SharedPreferences sharedPreferences;
 
   @Override
   public void onCreate() {
     super.onCreate();
     mContext = getApplicationContext();
+    sharedPreferences = mContext.getSharedPreferences("NIGHT_PLUS", mContext.MODE_PRIVATE);
     getUserInfo();
   }
 
   public static User getUser() {
     return user;
   }
-
   public static void setUser(User user) {
     SessionApplication.user = user;
   }
 
+  /**
+   * 使用token 缓存登录用户信息
+   */
   public void getUserInfo() {
     Log.i("TAG", "START");
     Observable<BaseEntityObject<User>> observable = RetrofitFactory.getUserRetrofitService()
@@ -76,4 +79,8 @@ public class SessionApplication extends Application {
       }
     });
   }
+
+  /**
+   * 根据版本号, 获取用户是否用户 引导页面
+   */
 }
