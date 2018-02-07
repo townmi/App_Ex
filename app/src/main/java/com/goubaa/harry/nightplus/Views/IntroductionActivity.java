@@ -49,7 +49,7 @@ public class IntroductionActivity extends AppCompatActivity {
       public void onClick(View v) {
         SharedPreferences.Editor editor = SessionApplication.sharedPreferences.edit();
         // 写入已读过介绍
-        editor.putString("introduction", "read");
+        editor.putString("INTRODUCTION", "read");
         editor.commit();
 
         startActivity(new Intent(IntroductionActivity.this, MainActivity.class));

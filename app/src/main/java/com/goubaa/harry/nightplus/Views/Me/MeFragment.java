@@ -15,6 +15,7 @@ import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseFragment;
 import com.goubaa.harry.nightplus.Base.BaseObserver;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.User;
 import com.goubaa.harry.nightplus.R;
@@ -164,22 +165,23 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
           if (arrayList != null) {
             city = arrayList.get(0);
             _id = city.get_id();
+            LogUtil.info(_id);
           }
         } catch (NullPointerException e) {
-          System.out.println("object == null不会导致空指针异常发生");
+          LogUtil.error(e.getMessage());
         }
-        new AlertDialog.Builder(getContext()).setTitle("AJAX Success").setMessage("userId: " +
-          _id).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-
-          }
-        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-
-          }
-        }).create().show();
+//        new AlertDialog.Builder(getContext()).setTitle("AJAX Success").setMessage("userId: " +
+//          _id).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//          @Override
+//          public void onClick(DialogInterface dialog, int which) {
+//
+//          }
+//        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//          @Override
+//          public void onClick(DialogInterface dialog, int which) {
+//
+//          }
+//        }).create().show();
       }
     });
   }

@@ -3,10 +3,16 @@
   package="com.goubaa.harry.nightplus">
 
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <!--SD card 读写权限-->
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <!--手机电话权限-->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <!--WIFI 权限-->
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
 
   <application
     android:name=".SessionApplication"
@@ -28,7 +34,9 @@
         <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".Views.MainActivity" />
+    <activity
+      android:name=".Views.MainActivity"
+      android:launchMode="singleTop" />
     <activity
       android:name=".Views.IntroductionActivity"
       android:launchMode="singleTop"

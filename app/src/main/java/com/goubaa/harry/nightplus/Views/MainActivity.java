@@ -3,19 +3,24 @@ package com.goubaa.harry.nightplus.Views;
 import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.CustomViews.ShadeView;
 import com.goubaa.harry.nightplus.R;
+import com.goubaa.harry.nightplus.SessionApplication;
 import com.goubaa.harry.nightplus.Views.Explores.ExploresFragment;
 import com.goubaa.harry.nightplus.Views.Explores.ExploresPageFragment;
 import com.goubaa.harry.nightplus.Views.Me.MeFragment;
 import com.goubaa.harry.nightplus.Views.Mission.MissionFragment;
 import com.goubaa.harry.nightplus.Views.VenueList.VenueListFragment;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,7 +31,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
+
+@RuntimePermissions
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
   .OnClickListener, ExploresFragment.OnFragmentInteractionListener, MissionFragment
   .OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
@@ -132,6 +145,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
       window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
       window.setStatusBarColor(Color.BLACK);
     }
+    /**
+     * 权限申请
+     */
+    MainActivityPermissionsDispatcher.requestWriteStoragePermissionWithPermissionCheck(this);
   }
 
   private void initData() {
@@ -196,4 +213,32 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     //you can leave it empty
   }
 
+  @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+  void requestWriteStoragePermission() {
+//    SessionApplication.callStoragePermission(MainActivity.this);
+  }
+
+  @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+  void showAllowForWriteStorage(final PermissionRequest request) {
+    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog,
+                                                                                      button) ->
+      request.proceed()).setNegativeButton("cancel", (dialog, button) -> request.cancel()).show();
+  }
+
+  @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+  void deniedForWriteStorage() {
+    SessionApplication.setCanWriteStorage(false);
+  }
+
+  @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+  void neverAskForWriteStorage() {
+    SessionApplication.setCanWriteStorage(true);
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
+    int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+  }
 }

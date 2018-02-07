@@ -34,7 +34,10 @@ public class Launch extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SharedPreferences sharedPreferences = SessionApplication.sharedPreferences;
-    String isFirstOpenApp = sharedPreferences.getString("introduction", "");
+    /**
+     * 根据版本号, 获取用户是否用户 引导页面
+     */
+    String isFirstOpenApp = sharedPreferences.getString("INTRODUCTION", "");
     if (isFirstOpenApp.isEmpty()) {
       startActivity(new Intent(Launch.this, IntroductionActivity.class));
       Launch.this.finish();
