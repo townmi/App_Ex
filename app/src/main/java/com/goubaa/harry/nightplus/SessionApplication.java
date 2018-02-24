@@ -1,8 +1,13 @@
 package com.goubaa.harry.nightplus;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
+import android.os.Build;
 import android.widget.Toast;
 
 import com.goubaa.harry.nightplus.Base.BaseEntityObject;
@@ -27,40 +32,47 @@ public class SessionApplication extends Application {
    *
    */
   public static Context mContext;
-  public static User user;
   public static SharedPreferences sharedPreferences;
-  public static HashMap buildInfomation;
+  public static HashMap buildInformation;
   public static Boolean canWriteStorage;
+  public static String token = null;
+  public static User user = null;
+
+  // 动态广播接收器
+  private static BatteryReceiver batteryReceiver;
 
   @Override
   public void onCreate() {
     super.onCreate();
     mContext = getApplicationContext();
-    buildInfomation = new HashMap<>();
+    buildInformation = new HashMap<>();
     canWriteStorage = false;
     /**
      * 应用 数据存储
      */
     sharedPreferences = mContext.getSharedPreferences("NIGHT_PLUS", mContext.MODE_PRIVATE);
-    getUserInfo();
-    Utils.getBuildInfo(buildInfomation);
-    Utils.getPhoneIMEI(mContext, buildInfomation);
-    Utils.getMacAddress(mContext, buildInfomation);
+    token = sharedPreferences.getString("TOKEN", null);
+    if (token != null && token.length() > 0) {
+      getUserInfo();
+    }
+    Utils.getBuildInfo(buildInformation);
+    Utils.getPhoneIMEI(mContext, buildInformation);
+    Utils.getMacAddress(mContext, buildInformation);
 
     String versionCode = Utils.getVersionCode(mContext);
     String versionName = Utils.getVersionName(mContext);
 
     if (versionCode != null && versionCode.length() > 0) {
-      buildInfomation.put("VERSION_CODE", versionCode);
+      buildInformation.put("VERSION_CODE", versionCode);
     }
     if (versionName != null && versionName.length() > 0) {
-      buildInfomation.put("VERSION_NAME", versionName);
+      buildInformation.put("VERSION_NAME", versionName);
     }
 
-    Iterator<Map.Entry<String, String>> iterator = buildInfomation.entrySet().iterator();
+    // print build information
+    Iterator<Map.Entry<String, String>> iterator = buildInformation.entrySet().iterator();
     while (iterator.hasNext()) {
       Map.Entry<String, String> entry = iterator.next();
-      LogUtil.debug("key= " + entry.getKey() + "; value= " + entry.getValue());
     }
   }
 
@@ -111,5 +123,38 @@ public class SessionApplication extends Application {
 
   public static void setCanWriteStorage(Boolean canWriteStorage) {
     SessionApplication.canWriteStorage = canWriteStorage;
+  }
+
+  public static void getElectricity() {
+    /**
+     * 如果系统API版本大于等于21, 可以使用 BatteryManager
+     */
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//      BatteryManager batteryManager = (BatteryManager) mContext.getSystemService(Context
+//        .BATTERY_SERVICE);
+    // 电池百分比
+//      LogUtil.debug(batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) + "");
+//    } else {
+    IntentFilter intentFilter = new IntentFilter();
+    intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+    batteryReceiver = new BatteryReceiver();
+    mContext.registerReceiver(batteryReceiver, intentFilter);
+//    }
+  }
+
+  protected static void destoryBatteryReceiver() {
+    mContext.unregisterReceiver(batteryReceiver);
+    LogUtil.debug("unregisterReceiver");
+  }
+}
+
+class BatteryReceiver extends BroadcastReceiver {
+  @Override
+  public void onReceive(Context context, Intent intent) {
+    int level = intent.getExtras().getInt("level");
+    int scale = intent.getExtras().getInt("scale");
+    int percent = level * 100 / scale;
+    LogUtil.debug(percent + "%");
+    SessionApplication.destoryBatteryReceiver();
   }
 }

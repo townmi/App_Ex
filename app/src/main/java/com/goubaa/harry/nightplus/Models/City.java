@@ -10,6 +10,11 @@ public class City {
   private String phone_code;
   private String _id;
 
+  public City(String cover, String name) {
+    this.cover = cover;
+    this.name = name;
+  }
+
   public String getCover() {
     return cover;
   }

@@ -7,9 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,15 +22,15 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.net.NetworkInterface;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by harry on 2018/1/24.
+ * Utils
+ *
+ * @author harryTang
  */
-
 public class Utils {
   private static final String marshmallowMacAddress = "02:00:00:00:00:00";
   private static final String fileAddressMac = "/sys/class/net/wlan0/address";
@@ -38,8 +38,8 @@ public class Utils {
   /**
    * 判断网络是否可以使用
    *
-   * @param context
-   * @return
+   * @param context Context
+   * @return boolean
    */
   public static boolean isNetworkAvailable(Context context) {
     ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext
@@ -59,14 +59,14 @@ public class Utils {
   /**
    * getBuildInfo 获取设备基本信息
    *
-   * @param buildInfomation
+   * @param buildInformation HashMap
    */
-  public static void getBuildInfo(HashMap buildInfomation) {
+  public static void getBuildInfo(HashMap buildInformation) {
     Field[] fields = Build.class.getDeclaredFields();
     for (Field field : fields) {
       try {
         field.setAccessible(true);
-        buildInfomation.put(field.getName(), field.get(null).toString());
+        buildInformation.put(field.getName(), field.get(null).toString());
       } catch (Exception e) {
         LogUtil.error(e.getMessage());
       }
@@ -76,10 +76,10 @@ public class Utils {
   /**
    * getPhoneIMEI 获取手机电话信息
    *
-   * @param context
-   * @param buildInfomation
+   * @param context         Context
+   * @param buildInformation HashMap
    */
-  public static void getPhoneIMEI(Context context, HashMap buildInfomation) {
+  public static void getPhoneIMEI(Context context, HashMap buildInformation) {
     TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context
       .TELEPHONY_SERVICE);
     String imei = null, imsi = null, phone = null;
@@ -94,37 +94,37 @@ public class Utils {
     }
 
     if (!(imei == null || imei.length() <= 0)) {
-      buildInfomation.put("imei", imei);
+      buildInformation.put("imei", imei);
     }
     if (!(imsi == null || imsi.length() <= 0)) {
-      buildInfomation.put("imsi", imsi);
+      buildInformation.put("imsi", imsi);
     }
     if (!(phone == null || phone.length() <= 0)) {
-      buildInfomation.put("phone", phone);
+      buildInformation.put("phone", phone);
     }
   }
 
   /**
    * getMacAddress 获取MAC 地址
    *
-   * @param context
-   * @param buildInfomation
+   * @param context         Context
+   * @param buildInformation HashMap
    */
-  public static void getMacAddress(Context context, HashMap buildInfomation) {
+  public static void getMacAddress(Context context, HashMap buildInformation) {
     String macAddress = null;
-    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     WifiInfo wifiInfo = (null == wifiManager ? null : wifiManager.getConnectionInfo());
 
     if (wifiInfo.getMacAddress().equals(marshmallowMacAddress)) {
       try {
         macAddress = getMacAddressByInterface();
         if (macAddress != null && macAddress.length() > 0) {
-          buildInfomation.put("MAC", macAddress);
+          buildInformation.put("MAC", macAddress);
           return;
         } else {
           macAddress = getMacAddressByFile(wifiManager);
           if (macAddress != null && macAddress.length() > 0) {
-            buildInfomation.put("MAC", macAddress);
+            buildInformation.put("MAC", macAddress);
           }
           return;
         }
@@ -139,7 +139,7 @@ public class Utils {
   /**
    * getMacAddressByInterface
    *
-   * @return
+   * @return String
    */
   private static String getMacAddressByInterface() {
     try {
@@ -170,9 +170,9 @@ public class Utils {
   /**
    * getMacAddressByFile
    *
-   * @param wifiManager
-   * @return
-   * @throws Exception
+   * @param wifiManager WifiManager
+   * @return String
+   * @throws Exception e
    */
   private static String getMacAddressByFile(WifiManager wifiManager) throws Exception {
     String ret;
@@ -193,9 +193,9 @@ public class Utils {
   /**
    * convertRunChifyStringFromStream
    *
-   * @param inputStream
-   * @return
-   * @throws IOException
+   * @param inputStream InputStream
+   * @return String
+   * @throws IOException e
    */
   private static String convertRunChifyStringFromStream(InputStream inputStream) throws
     IOException {
@@ -221,8 +221,8 @@ public class Utils {
   /**
    * getVersionCode 获取当前版本CODE
    *
-   * @param context
-   * @return
+   * @param context Context
+   * @return String
    */
   public static String getVersionCode(Context context) {
     PackageManager packageManager = context.getPackageManager();
@@ -241,8 +241,8 @@ public class Utils {
   /**
    * getVersionName 获取当前版本
    *
-   * @param context
-   * @return
+   * @param context Context
+   * @return String
    */
   public static String getVersionName(Context context) {
     PackageManager packageManager = context.getPackageManager();

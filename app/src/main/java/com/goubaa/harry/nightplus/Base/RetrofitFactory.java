@@ -1,5 +1,6 @@
 package com.goubaa.harry.nightplus.Base;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.FieldNamingPolicy;
@@ -12,10 +13,13 @@ import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.Post;
 import com.goubaa.harry.nightplus.Models.User;
+import com.goubaa.harry.nightplus.SessionApplication;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,7 +56,8 @@ public class RetrofitFactory {
       LogUtil.debug(message);
     }
   }).setLevel(HttpLoggingInterceptor.Level.BASIC)).connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-    .readTimeout(TIMEOUT, TimeUnit.SECONDS).build();
+    .cache(new Cache(new File(SessionApplication.mContext.getExternalCacheDir(), "cache"), 10 *
+      1024 * 1024)).readTimeout(TIMEOUT, TimeUnit.SECONDS).build();
 
   // venuesCore service
   private static RetrofitService retrofitService = new Retrofit.Builder().baseUrl(BASE_URL)

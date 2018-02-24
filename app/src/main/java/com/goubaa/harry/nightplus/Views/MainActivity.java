@@ -2,15 +2,16 @@ package com.goubaa.harry.nightplus.Views;
 
 import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.CustomViews.ShadeView;
+import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.R;
 import com.goubaa.harry.nightplus.SessionApplication;
 import com.goubaa.harry.nightplus.Views.Explores.ExploresFragment;
-import com.goubaa.harry.nightplus.Views.Explores.ExploresPageFragment;
 import com.goubaa.harry.nightplus.Views.Me.MeFragment;
 import com.goubaa.harry.nightplus.Views.Mission.MissionFragment;
 import com.goubaa.harry.nightplus.Views.VenueList.VenueListFragment;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.net.Uri;
@@ -20,12 +21,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +50,9 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
-  .OnClickListener, ExploresFragment.OnFragmentInteractionListener, MissionFragment
-  .OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
-  .OnFragmentInteractionListener, ExploresPageFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ExploresFragment
+  .OnFragmentInteractionListener, MissionFragment.OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
+  .OnFragmentInteractionListener {
 
   @BindView(R.id.main_activity)
   LinearLayout linearLayout;
@@ -51,14 +60,17 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
   @BindView(R.id.main_viewpager)
   ViewPager viewPager;
 
+  @BindView(R.id.main_title_bar)
+  Toolbar toolbar;
+
   private List<TabFragment> tabFragments;
 
   private List<ShadeView> tabIndicators;
 
   private List<Fragment> fragmentList;
 
-  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable
-    .main_tab_incentives_active, R.drawable.main_tab_mission_active, R.drawable.main_tab_me_active};
+  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable.main_tab_incentives_active, R.drawable.main_tab_mission_active, R
+    .drawable.main_tab_me_active};
 
   private FragmentPagerAdapter adapter;
 
@@ -111,7 +123,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
       leftTab.setIconAlpha(1 - positionOffset);
       rightTab.setIconAlpha(positionOffset);
     }
-
   }
 
   @Override
@@ -119,6 +130,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+
+    setSupportActionBar(toolbar);
 
     initData();
     viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -145,16 +158,18 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
       window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
       window.setStatusBarColor(Color.BLACK);
     }
+
     /**
      * 权限申请
      */
     MainActivityPermissionsDispatcher.requestWriteStoragePermissionWithPermissionCheck(this);
+    MainActivityPermissionsDispatcher.requestGPSPermissionWithPermissionCheck(this);
   }
 
   private void initData() {
     tabFragments = new ArrayList<>();
     tabIndicators = new ArrayList<>();
-    String[] titles = new String[]{"市场", "交易", "资金", "我的"};
+    String[] titles = new String[]{"微信", "通讯录", "发现", "我"};
 
     //
     Fragment exploresFragment = ExploresFragment.newInstance();
@@ -213,6 +228,52 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     //you can leave it empty
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    int id = item.getItemId();
+
+    //noinspection SimplifiableIfStatement
+    if (id == R.id.action_group) {
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  private void setIconEnable(Menu menu, boolean enable) {
+    if (menu != null) {
+      try {
+        Class clazz = menu.getClass();
+        if (clazz.getSimpleName().equals("MenuBuilder")) {
+          Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+          m.setAccessible(true);
+          //MenuBuilder实现Menu接口，创建菜单时，传进来的menu其实就是MenuBuilder对象(java的多态特征)
+          m.invoke(menu, enable);
+        }
+      } catch (Exception e) {
+        LogUtil.error(e.getMessage());
+      }
+    }
+  }
+
+  @Override
+  protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+    setIconEnable(menu, true);
+    return super.onPrepareOptionsPanel(view, menu);
+  }
+
+  /**
+   * ask permission for write Storage
+   */
   @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
   void requestWriteStoragePermission() {
 //    SessionApplication.callStoragePermission(MainActivity.this);
@@ -220,24 +281,49 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
   void showAllowForWriteStorage(final PermissionRequest request) {
-    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog,
-                                                                                      button) ->
-      request.proceed()).setNegativeButton("cancel", (dialog, button) -> request.cancel()).show();
+    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog, button) -> request.proceed()).setNegativeButton
+      ("cancel", (dialog, button) -> request.cancel()).show();
   }
 
   @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
   void deniedForWriteStorage() {
     SessionApplication.setCanWriteStorage(false);
+    LogUtil.debug("deniedForWriteStorage");
   }
 
   @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
   void neverAskForWriteStorage() {
     SessionApplication.setCanWriteStorage(true);
+    LogUtil.debug("neverAskForWriteStorage");
   }
 
+  /**
+   * ask permission for GPS
+   */
+  @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+  void requestGPSPermission() {
+
+  }
+
+  @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+  void showAllowForGPS(final PermissionRequest request) {
+    new AlertDialog.Builder(this).setMessage("GPS").setPositiveButton("allow", (dialog, button) -> request.proceed()).setNegativeButton("cancel",
+      (dialog, which) -> request.cancel()).show();
+  }
+
+  @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
+  void deniedForGPS() {
+    LogUtil.debug("deniedForGPS");
+  }
+
+  @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
+  void neverAskForGPS() {
+    LogUtil.debug("neverAskForGPS");
+  }
+
+
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
-    int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
   }

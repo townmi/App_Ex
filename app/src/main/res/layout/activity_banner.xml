@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="com.goubaa.harry.nightplus.Views.BannerActivity.BannerActivity">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/colorBackground"
+    android:gravity="center"
+    app:layout_behavior="com.goubaa.harry.nightplus.Views.Explores.ScrollTopBehavior">
+
+    <com.youth.banner.Banner
+      android:id="@+id/explores_banner"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+  </LinearLayout>
+
+  <com.goubaa.harry.nightplus.CustomViews.CanvasDraw
+    android:id="@+id/mission_canvas"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    app:canvas_text="xxx" />
+</android.support.constraint.ConstraintLayout>

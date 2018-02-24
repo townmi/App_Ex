@@ -1,19 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="@dimen/y40"
+  android:background="@drawable/main_explores_list_item"
+  android:gravity="center_vertical"
+  android:paddingLeft="@dimen/x13"
+  android:paddingTop="@dimen/y5"
+  android:paddingBottom="@dimen/y5"
+  android:paddingRight="@dimen/x13">
 
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="16dp"
-    android:textColor="@color/colorBlack"
-    android:id="@+id/explores_list_item_name" />
+  <RelativeLayout
+    android:id="@+id/explores_list_relative_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="16dp"
-    android:textColor="@color/colorBlack"
-    android:id="@+id/explores_list_item_age" />
+    <ImageView
+      android:id="@+id/explores_list_image"
+      android:layout_width="@dimen/y30"
+      android:layout_height="@dimen/y30"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:background="#c1f022"
+      android:src="@drawable/a1i" />
+
+    <TextView
+      android:id="@+id/explores_list_item_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@+id/explores_list_item_description"
+      android:layout_alignParentTop="true"
+      android:layout_alignStart="@+id/explores_list_item_description"
+      android:layout_marginTop="@dimen/x2"
+      android:textColor="#353535"
+      android:textSize="18sp" />
+
+    <TextView
+      android:id="@+id/explores_list_item_description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="@dimen/x2"
+      android:layout_marginLeft="@dimen/x11"
+      android:layout_marginStart="@dimen/x11"
+      android:layout_toEndOf="@+id/explores_list_image"
+      android:layout_toRightOf="@+id/explores_list_image"
+      android:textColor="#999999"
+      android:textSize="14sp" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      android:text="晚上8:32"
+      android:textColor="#BBBBBB"
+      android:textSize="12sp" />
+  </RelativeLayout>
 </LinearLayout>

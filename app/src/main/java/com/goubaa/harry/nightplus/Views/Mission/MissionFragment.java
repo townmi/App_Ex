@@ -15,11 +15,15 @@ import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseFragment;
 import com.goubaa.harry.nightplus.Base.BaseObserver;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.Models.Post;
 import com.goubaa.harry.nightplus.R;
 import com.goubaa.harry.nightplus.CustomViews.CanvasDraw;
+import com.goubaa.harry.nightplus.SessionApplication;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +47,6 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
   private String mParam1;
   private String mParam2;
 
-  @BindView(R.id.mission_canvas)
-  CanvasDraw canvasDraw;
 
   private OnFragmentInteractionListener mListener;
 
@@ -81,12 +83,11 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_mission, container, false);
     ButterKnife.bind(this, view);
-//        canvasDraw.refresh();
+
     return view;
   }
 
@@ -100,7 +101,6 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
   @Override
   public void onStart() {
     super.onStart();
-    getPost("5a658edebc02c25463dd425f");
   }
 
   @Override
@@ -108,9 +108,9 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
     super.onAttach(context);
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
+      getPost("5a658edebc02c25463dd425f");
     } else {
-      throw new RuntimeException(context.toString()
-        + " must implement OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
     }
   }
 
@@ -172,25 +172,27 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
           if (arrayList != null) {
             post = arrayList.get(0);
             _id = post.get_id();
+            LogUtil.info(_id);
+            SessionApplication.getElectricity();
           }
         } catch (NullPointerException e) {
-          System.out.println("object == null不会导致空指针异常发生");
+          LogUtil.error(e.getMessage());
         }
-        new AlertDialog.Builder(getContext())
-          .setTitle("AJAX Success")
-          .setMessage("userId: " + _id)
-          .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-          })
-          .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-          }).create().show();
+//        new AlertDialog.Builder(getContext())
+//          .setTitle("AJAX Success")
+//          .setMessage("userId: " + _id)
+//          .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//          })
+//          .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//          }).create().show();
       }
     });
 

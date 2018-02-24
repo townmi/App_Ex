@@ -25,26 +25,23 @@ import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseFragment extends RxFragment implements IBaseView {
   /**
-   * @param lifecycleTransformer
-   * @param <T>
-   * @return
+   * @param lifecycleTransformer LifecycleTransformer
+   * @param <T>                  t
+   * @return ObservableTransformer
    */
-  protected <T> ObservableTransformer<T, T> compose(final LifecycleTransformer<T> lifecycleTransformer) {
+  protected <T> ObservableTransformer<T, T> compose(final LifecycleTransformer<T>
+                                                      lifecycleTransformer) {
     return new ObservableTransformer<T, T>() {
       @Override
       public ObservableSource<T> apply(Observable<T> upstream) {
-        return upstream
-          .subscribeOn(Schedulers.io())
-          .doOnSubscribe(new Consumer<Disposable>() {
-            @Override
-            public void accept(Disposable disposable) throws Exception {
-              if (!Utils.isNetworkAvailable(getContext())) {
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-              }
+        return upstream.subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Disposable>() {
+          @Override
+          public void accept(Disposable disposable) throws Exception {
+            if (!Utils.isNetworkAvailable(getContext())) {
+              Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
             }
-          })
-          .observeOn(AndroidSchedulers.mainThread())
-          .compose(lifecycleTransformer);
+          }
+        }).observeOn(AndroidSchedulers.mainThread()).compose(lifecycleTransformer);
       }
     };
   }
@@ -113,11 +110,13 @@ public abstract class BaseFragment extends RxFragment implements IBaseView {
 
     intent.setClass(getActivity(), pClass);
     startActivity(intent);
-    getActivity().overridePendingTransition(R.transition.transition_next_in, R.transition.transition_next_out);
+    getActivity().overridePendingTransition(R.transition.transition_next_in, R.transition
+      .transition_next_out);
   }
 
   protected void startThActivityByIntent(Intent intent) {
     startActivity(intent);
-    getActivity().overridePendingTransition(R.transition.transition_next_in, R.transition.transition_next_out);
+    getActivity().overridePendingTransition(R.transition.transition_next_in, R.transition
+      .transition_next_out);
   }
 }

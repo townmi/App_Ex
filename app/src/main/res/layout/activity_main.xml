@@ -1,60 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/main_activity"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:id="@+id/main_activity"
   android:orientation="vertical">
+
+  <android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/MainTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/main_title_bar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:popupTheme="@style/MainTheme.PopupOverlay"
+      app:titleTextAppearance="?attr/titleTextStyle"
+      app:title="@string/app_main_title"/>
+
+  </android.support.design.widget.AppBarLayout>
 
   <android.support.v4.view.ViewPager
     android:id="@+id/main_viewpager"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1"></android.support.v4.view.ViewPager>
+    android:layout_weight="1"
+    android:background="#ececec"></android.support.v4.view.ViewPager>
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="@dimen/y34"
     android:background="@drawable/main_tab_background"
     android:orientation="horizontal"
-    android:paddingBottom="2dp"
-    android:paddingTop="1dp">
+    android:paddingBottom="@dimen/y4"
+    android:paddingTop="@dimen/y1">
 
     <com.goubaa.harry.nightplus.CustomViews.ShadeView
       android:id="@+id/main_tab_one"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
-      android:padding="5dp"
-      app:icon="@drawable/main_tab_explore_active"
-      app:text="市场" />
+      android:padding="@dimen/y1"
+      app:icon="@drawable/main_tab_explore"
+      app:icon_active="@drawable/main_tab_explore_active"
+      app:text="微信" />
 
     <com.goubaa.harry.nightplus.CustomViews.ShadeView
       android:id="@+id/main_tab_two"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
-      android:padding="5dp"
-      app:icon="@drawable/main_tab_incentives_active"
-      app:text="交易" />
+      android:padding="@dimen/y1"
+      app:icon="@drawable/main_tab_incentives"
+      app:icon_active="@drawable/main_tab_incentives_active"
+      app:text="通讯录" />
 
     <com.goubaa.harry.nightplus.CustomViews.ShadeView
       android:id="@+id/main_tab_three"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
-      android:padding="5dp"
-      app:icon="@drawable/main_tab_mission_active"
-      app:text="资金" />
+      android:padding="@dimen/y1"
+      app:icon="@drawable/main_tab_mission"
+      app:icon_active="@drawable/main_tab_mission_active"
+      app:text="发现" />
 
     <com.goubaa.harry.nightplus.CustomViews.ShadeView
       android:id="@+id/main_tab_four"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
-      android:padding="5dp"
-      app:icon="@drawable/main_tab_me_active"
-      app:text="我的" />
+      android:padding="@dimen/y1"
+      app:icon="@drawable/main_tab_me"
+      app:icon_active="@drawable/main_tab_me_active"
+      app:text="我" />
   </LinearLayout>
 
 </LinearLayout>

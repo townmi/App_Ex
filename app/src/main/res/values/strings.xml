@@ -1,6 +1,13 @@
 <resources>
   <string name="app_name">Night+</string>
 
+  <string name="app_main_title">微信</string>
+  <string name="app_main_action_group">发起群聊</string>
+  <string name="app_main_action_add_friend">添加朋友</string>
+  <string name="app_main_action_scan">扫一扫</string>
+  <string name="app_main_action_qrCode">收付款</string>
+  <string name="app_main_action_help">帮助与反馈</string>
+
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="app_explores_title">市场</string>
   <string name="app_me_title">我的</string>

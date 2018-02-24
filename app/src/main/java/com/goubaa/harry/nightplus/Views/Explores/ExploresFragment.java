@@ -1,29 +1,32 @@
 package com.goubaa.harry.nightplus.Views.Explores;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.goubaa.harry.nightplus.Adapter.ExploresViewItemAdapter;
+import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseFragment;
+import com.goubaa.harry.nightplus.Base.BaseObserver;
+import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.Library.LogUtil;
+import com.goubaa.harry.nightplus.Models.City;
+import com.goubaa.harry.nightplus.Models.Message;
 import com.goubaa.harry.nightplus.R;
-import com.goubaa.harry.nightplus.Adapter.ExploresViewPagerAdapter;
-import com.youth.banner.Banner;
+import com.goubaa.harry.nightplus.Views.Me.MeFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,42 +37,22 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class ExploresFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
-  @BindView(R.id.fragment_explores_tab_layout)
-  TabLayout tabLayout;
 
-  @BindView(R.id.fragment_explores_layout)
-  CoordinatorLayout coordinatorLayout;
+  private MeFragment.OnFragmentInteractionListener mListener;
 
-  @BindView(R.id.fragment_explores)
-  ViewPager viewPager;
-
-  @BindView(R.id.explores_banner)
-  Banner banner;
-
-
-  private ExploresViewPagerAdapter exploresViewPagerAdapter;
-  private String[] mTitles;
-
-
-  private OnFragmentInteractionListener mListener;
+  @BindView(R.id.explores_list)
+  ListView listView;
 
   public ExploresFragment() {
     // Required empty public constructor
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_explores, container, false);
     ButterKnife.bind(this, view);
-
-    List<String> images = new ArrayList<>();
-
-    images.add("http://ooa2erl8d.bkt.clouddn.com/fb06efc070004037a0e5061869ad7187.jpg");
-    images.add("http://ooa2erl8d.bkt.clouddn.com/88032e3511b941a89a5fda390ae7a15e.jpg");
-
-    banner.setImages(images).setImageLoader(new GlideImageLoader()).start();
+    listView.setDivider(null);
     return view;
   }
 
@@ -89,30 +72,21 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    initViews();
-  }
-
-  private void initViews() {
-    String[] s = {
-      "自选", "BNB", "BTC", "ETH", "USDT"
-    };
-    mTitles = s;
-    exploresViewPagerAdapter = new ExploresViewPagerAdapter(getChildFragmentManager(), mTitles);
-    viewPager.setAdapter(exploresViewPagerAdapter);
-
-    viewPager.addOnPageChangeListener(this);
-
-    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-    SharedPreferences pref = getContext().getSharedPreferences("ThemeColor", getContext().MODE_PRIVATE);
-    tabLayout.setSelectedTabIndicatorColor(pref.getInt("themeColor", Color.rgb(232, 179, 66)));
-
-    tabLayout.setTabTextColors(getResources().getColor(R.color.colorLightGray), pref.getInt("themeColor", Color.rgb(232, 179, 66)));
-    tabLayout.setupWithViewPager(viewPager);
-
-
-    viewPager.setOffscreenPageLimit(1);
+    try {
+      ArrayList<Message> arrayList = new ArrayList<Message>();
+      arrayList.add(new Message("吃鸡群", "本来是:", R.drawable.a1i));
+      arrayList.add(new Message("订阅号", "苏州交警:", R.drawable.a1j));
+      arrayList.add(new Message("上海公积金", "喜迎春节:", R.drawable.a1k));
+      arrayList.add(new Message("NIGHT+ tech core team", "繁星海风:", R.drawable.a1l));
+      arrayList.add(new Message("腾讯新闻", "女子喝醉:", R.drawable.a1m));
+      arrayList.add(new Message("肯德基", "情人节倒计时:", R.drawable.a1n));
+      if (arrayList != null) {
+        ExploresViewItemAdapter exploresViewItemAdapter = new ExploresViewItemAdapter(getContext(), R.layout.item_view_explores, arrayList);
+        listView.setAdapter(exploresViewItemAdapter);
+      }
+    } catch (NullPointerException e) {
+      LogUtil.error(e.getMessage());
+    }
   }
 
   @Override
@@ -131,11 +105,10 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
-    if (context instanceof OnFragmentInteractionListener) {
-      mListener = (OnFragmentInteractionListener) context;
+    if (context instanceof MeFragment.OnFragmentInteractionListener) {
+      mListener = (MeFragment.OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
-        + " must implement OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " + "OnFragmentInteractionListener");
     }
   }
 
@@ -152,8 +125,6 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
-
-//        public void onArticleSelected(int position);
   }
 
   @Override
@@ -174,7 +145,6 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   @Override
   public void onDetach() {
     super.onDetach();
-    banner.stopAutoPlay();
   }
 
   @Override
@@ -185,6 +155,19 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   @Override
   protected String setFragmentName() {
     return "动态";
+  }
+
+
+  private void getStudents() {
+
+    Observable<BaseEntity<City>> observable = RetrofitFactory.getInstance().getCities();
+    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new BaseObserver<City>(getContext()) {
+      @Override
+      protected void onHandleSuccess(ArrayList<City> arrayList) {
+        City city;
+        String _id = "";
+      }
+    });
   }
 
 }

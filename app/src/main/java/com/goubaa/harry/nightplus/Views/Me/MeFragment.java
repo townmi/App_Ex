@@ -16,6 +16,7 @@ import com.goubaa.harry.nightplus.Base.BaseFragment;
 import com.goubaa.harry.nightplus.Base.BaseObserver;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
 import com.goubaa.harry.nightplus.Library.LogUtil;
+import com.goubaa.harry.nightplus.Library.Utils;
 import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.User;
 import com.goubaa.harry.nightplus.R;
@@ -95,9 +96,6 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     super.onAttach(context);
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
-
-      User user = SessionApplication.getUser();
-
       getStudents("", "");
     } else {
       throw new RuntimeException(context.toString() + " must implement " +

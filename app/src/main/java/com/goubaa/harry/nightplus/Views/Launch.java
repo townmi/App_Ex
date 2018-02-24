@@ -46,9 +46,8 @@ public class Launch extends BaseActivity {
     setContentView(R.layout.activity_launch);
     ButterKnife.bind(this);
     setTranslucentStatus(true);
-    launchImage.setImageResource(R.drawable.launch_default);
-    Observable.timer(400, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Consumer<Long>() {
+    launchImage.setImageResource(R.drawable.welcome);
+    Observable.timer(400, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
       @Override
       public void accept(Long aLong) throws Exception {
         startAnim();

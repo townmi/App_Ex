@@ -1,0 +1,41 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="com.goubaa.harry.nightplus.Views.MainActivity">
+  <item
+    android:id="@+id/action_search"
+    android:icon="@drawable/main_action_search"
+    android:orderInCategory="100"
+    android:title="@string/app_main_title"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/action_group"
+    android:icon="@drawable/main_action_group"
+    android:orderInCategory="100"
+    android:title="@string/app_main_title"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/action_add_friend"
+    android:icon="@drawable/main_action_friend"
+    android:orderInCategory="100"
+    android:title="@string/app_main_action_group"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/action_scan"
+    android:icon="@drawable/main_action_scan"
+    android:orderInCategory="100"
+    android:title="@string/app_main_action_scan"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/action_qrCode"
+    android:icon="@drawable/main_action_scan"
+    android:orderInCategory="100"
+    android:title="@string/app_main_action_qrCode"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/action_help"
+    android:icon="@drawable/main_action_group"
+    android:orderInCategory="100"
+    android:title="@string/app_main_action_help"
+    app:showAsAction="never" />
+</menu>
