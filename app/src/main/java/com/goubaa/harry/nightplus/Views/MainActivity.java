@@ -11,9 +11,10 @@ import com.goubaa.harry.nightplus.Views.Mission.MissionFragment;
 import com.goubaa.harry.nightplus.Views.VenueList.VenueListFragment;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -21,26 +22,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -50,9 +49,12 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ExploresFragment
-  .OnFragmentInteractionListener, MissionFragment.OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
+  .OnClickListener, ExploresFragment.OnFragmentInteractionListener, MissionFragment
+  .OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
   .OnFragmentInteractionListener {
+
+  private PopupWindow popupWindow;
 
   @BindView(R.id.main_activity)
   LinearLayout linearLayout;
@@ -60,8 +62,40 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
   @BindView(R.id.main_viewpager)
   ViewPager viewPager;
 
-  @BindView(R.id.main_title_bar)
-  Toolbar toolbar;
+  @OnClick(R.id.title_popup)
+  public void showMenu(View v) {
+    if (popupWindow != null && popupWindow.isShowing()) {
+      popupWindow.dismiss();
+      return;
+    }
+
+    int y = getResources().getDimensionPixelSize(R.dimen.y30);
+    View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.main_drop_down,
+      null);
+    popupWindow = new PopupWindow(MainActivity.this);
+    popupWindow.setContentView(contentView);
+    popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+    popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+//    popupWindow.setOutsideTouchable(true);
+//    popupWindow.setAnimationStyle(R.style.animation_main_menu);
+//    popupWindow.update();
+    popupWindow.setBackgroundDrawable(new ColorDrawable(0xffffff));
+    popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        if (popupWindow.isShowing()) {
+          popupWindow.dismiss();
+          return true;
+        }
+        return false;
+      }
+    });
+
+    popupWindow.showAsDropDown(v, 0, -1 * y);
+  }
+
+  //  @BindView(R.id.main_title_bar)
+  //  Toolbar toolbar;
 
   private List<TabFragment> tabFragments;
 
@@ -69,8 +103,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   private List<Fragment> fragmentList;
 
-  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable.main_tab_incentives_active, R.drawable.main_tab_mission_active, R
-    .drawable.main_tab_me_active};
+  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable
+    .main_tab_incentives_active, R.drawable.main_tab_mission_active, R.drawable.main_tab_me_active};
 
   private FragmentPagerAdapter adapter;
 
@@ -131,7 +165,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
+//    setSupportActionBar(toolbar);
 
     initData();
     viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -265,11 +299,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
   }
 
-  @Override
-  protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-    setIconEnable(menu, true);
-    return super.onPrepareOptionsPanel(view, menu);
-  }
+//  @Override
+//  protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+//    setIconEnable(menu, true);
+////    return super.onPrepareOptionsPanel(view, menu);
+//  }
 
   /**
    * ask permission for write Storage
@@ -281,8 +315,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
   void showAllowForWriteStorage(final PermissionRequest request) {
-    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog, button) -> request.proceed()).setNegativeButton
-      ("cancel", (dialog, button) -> request.cancel()).show();
+    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog,
+                                                                                      button) ->
+      request.proceed()).setNegativeButton("cancel", (dialog, button) -> request.cancel()).show();
   }
 
   @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -307,8 +342,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
   void showAllowForGPS(final PermissionRequest request) {
-    new AlertDialog.Builder(this).setMessage("GPS").setPositiveButton("allow", (dialog, button) -> request.proceed()).setNegativeButton("cancel",
-      (dialog, which) -> request.cancel()).show();
+    new AlertDialog.Builder(this).setMessage("GPS").setPositiveButton("allow", (dialog, button)
+      -> request.proceed()).setNegativeButton("cancel", (dialog, which) -> request.cancel()).show();
   }
 
   @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -323,7 +358,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
 
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
+    int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
   }

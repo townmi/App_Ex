@@ -3,27 +3,27 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <ImageView
-    android:id="@+id/launch"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="fitXY"
-    android:src="@drawable/welcome" />
   <View
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_theme_background" />
 
-  <TextView
+  <ImageView
+    android:id="@+id/launch"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginBottom="25dp"
-    android:gravity="center"
-    android:text="悦夜云提供计算服务"
-    android:textColor="@android:color/white"
-    android:textSize="10sp" />
+    android:layout_height="match_parent"
+    android:src="@drawable/launch_background" />
+
+  <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginBottom="25dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="悦夜云提供计算服务"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="10sp" />-->
 
 </RelativeLayout>

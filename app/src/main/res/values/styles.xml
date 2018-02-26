@@ -1,23 +1,25 @@
 <resources>
 
-  <style name="AppTheme" parent="MainTheme"></style>
+  <style name="AppTheme" parent="NoActionBarTheme"></style>
 
   <style name="MainTheme" parent="android:Theme.Holo.Light.DarkActionBar">
     <!--<item name="android:actionBarStyle">@style/ActionBar</item>-->
-    <item name="android:itemBackground">#393A3F</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="android:itemBackground">@color/colorPrimary</item>
     <item name="android:actionBarDivider">@null</item>
     <item name="actionBarSize">@dimen/y30</item>
     <item name="titleTextStyle">@style/ActionBarTitle</item>
   </style>
 
   <!--<style name="ActionBar" parent="android:Widget.ActionBar">-->
-    <!--<item name="android:displayOptions">showTitle</item>-->
-    <!--<item name="android:background">#303537</item>-->
+  <!--<item name="android:displayOptions">showTitle</item>-->
+  <!--<item name="android:background">#303537</item>-->
   <!--</style>-->
 
   <style name="ActionBarTitle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
     <item name="android:textColor">#FFFFFF</item>
-    <item name="android:textSize">16sp</item>
+    <item name="android:textSize">18sp</item>
   </style>
 
   <style name="OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
@@ -30,7 +32,7 @@
 
   <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
     <item name="overlapAnchor">false</item>
-    <item name="android:popupBackground">#393A3F</item>
+    <item name="android:popupBackground">@color/colorPrimary</item>
     <item name="android:dropDownVerticalOffset">0dip</item>
     <item name="android:dropDownHorizontalOffset">0dip</item>
   </style>
@@ -44,12 +46,12 @@
   <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorTheme</item>
+    <item name="colorAccent">@color/colorPrimaryDark</item>
   </style>
 
-
   <style name="SplashTheme" parent="NoActionBarTheme">
-    <item name="android:windowBackground">@drawable/welcome</item>
+    <!--<item name="android:windowBackground">@drawable/launch_background</item>-->
+    <item name="android:windowBackground">@color/colorPrimary</item>
     <item name="android:windowFullscreen">false</item>
     <item name="windowNoTitle">true</item>
   </style>
@@ -59,12 +61,16 @@
     <item name="windowNoTitle">true</item>
   </style>
 
-
   <style name="MyThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
     <!--选中状态icon的颜色和字体颜色-->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorTheme</item>
     <!--<item name="android:actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>-->
+  </style>
+
+  <style name="animation_main_menu">
+    <item name="android:windowEnterAnimation">@anim/animation_main_menu_in</item>
+    <item name="android:windowExitAnimation">@anim/animation_main_menu_out</item>
   </style>
 </resources>

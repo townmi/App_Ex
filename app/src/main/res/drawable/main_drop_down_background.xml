@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item>
+    <shape android:shape="rectangle">
+      <padding android:top="@dimen/y1" />
+      <padding android:right="@dimen/x6" />
+      <padding android:bottom="@dimen/x6" />
+      <padding android:left="@dimen/y1" />
+      <solid android:color="@android:color/transparent" />
+      <corners android:radius="@dimen/x6" />
+    </shape>
+  </item>
+
+  <item>
+    <shape android:shape="rectangle">
+      <padding android:top="@dimen/y1" />
+      <padding android:right="@dimen/x1" />
+      <padding android:bottom="@dimen/x1" />
+      <padding android:left="@dimen/y1" />
+      <solid android:color="#04000000" />
+      <corners android:radius="@dimen/x1" />
+    </shape>
+  </item>
+  <item>
+    <shape android:shape="rectangle">
+      <padding android:top="@dimen/y1" />
+      <padding android:right="@dimen/x1" />
+      <padding android:bottom="@dimen/x1" />
+      <padding android:left="@dimen/y1" />
+      <solid android:color="#05000000" />
+      <corners android:radius="@dimen/x1" />
+    </shape>
+  </item>
+  <item>
+    <shape android:shape="rectangle">
+      <padding android:top="@dimen/y1" />
+      <padding android:right="@dimen/x1" />
+      <padding android:bottom="@dimen/x1" />
+      <padding android:left="@dimen/y1" />
+      <solid android:color="#06000000" />
+      <corners android:radius="@dimen/x1" />
+    </shape>
+  </item>
+  <item>
+    <shape android:shape="rectangle">
+      <padding android:top="@dimen/y1" />
+      <padding android:right="@dimen/x1" />
+      <padding android:bottom="@dimen/x1" />
+      <padding android:left="@dimen/y1" />
+      <solid android:color="#07000000" />
+      <corners android:radius="@dimen/x1" />
+    </shape>
+  </item>
+  <item>
+    <shape android:shape="rectangle">
+      <padding android:top="@dimen/y1" />
+      <padding android:right="@dimen/x1" />
+      <padding android:bottom="@dimen/x1" />
+      <padding android:left="@dimen/y1" />
+      <solid android:color="#08000000" />
+      <corners android:radius="@dimen/x1" />
+    </shape>
+  </item>
+
+  <!-- Background -->
+  <item>
+    <shape android:shape="rectangle">
+      <solid android:color="@color/colorPrimary" />
+    </shape>
+  </item>
+</layer-list>

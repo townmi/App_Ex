@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="@dimen/y40"
+  android:clickable="true"
   android:background="@drawable/main_explores_list_item"
   android:gravity="center_vertical"
-  android:paddingLeft="@dimen/x13"
-  android:paddingTop="@dimen/y5"
   android:paddingBottom="@dimen/y5"
-  android:paddingRight="@dimen/x13">
+  android:paddingLeft="@dimen/x13"
+  android:paddingRight="@dimen/x13"
+  android:paddingTop="@dimen/y5">
 
   <RelativeLayout
     android:id="@+id/explores_list_relative_parent"
@@ -33,7 +34,7 @@
       android:layout_alignStart="@+id/explores_list_item_description"
       android:layout_marginTop="@dimen/x2"
       android:textColor="#353535"
-      android:textSize="18sp" />
+      android:textSize="16sp" />
 
     <TextView
       android:id="@+id/explores_list_item_description"
@@ -46,7 +47,7 @@
       android:layout_toEndOf="@+id/explores_list_image"
       android:layout_toRightOf="@+id/explores_list_image"
       android:textColor="#999999"
-      android:textSize="14sp" />
+      android:textSize="13sp" />
 
     <TextView
       android:layout_width="wrap_content"

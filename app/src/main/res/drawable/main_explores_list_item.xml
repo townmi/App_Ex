@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-  <item>
-    <shape>
-      <solid android:color="#d9d9d9" />
-    </shape>
-  </item>
-  <item android:bottom="1px">
-    <shape>
-      <solid android:color="#ffffff" />
-    </shape>
-  </item>
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item android:drawable="@drawable/main_explores_list_touch_pressed" android:state_pressed="true"></item>
+  <item android:drawable="@drawable/main_explores_list_touch_unpressed" android:state_pressed="false"
+    android:state_selected="false"></item>
+
+</selector>

@@ -80,6 +80,18 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
       arrayList.add(new Message("NIGHT+ tech core team", "繁星海风:", R.drawable.a1l));
       arrayList.add(new Message("腾讯新闻", "女子喝醉:", R.drawable.a1m));
       arrayList.add(new Message("肯德基", "情人节倒计时:", R.drawable.a1n));
+      arrayList.add(new Message("吃鸡群", "本来是:", R.drawable.a1i));
+      arrayList.add(new Message("订阅号", "苏州交警:", R.drawable.a1j));
+      arrayList.add(new Message("上海公积金", "喜迎春节:", R.drawable.a1k));
+      arrayList.add(new Message("NIGHT+ tech core team", "繁星海风:", R.drawable.a1l));
+      arrayList.add(new Message("腾讯新闻", "女子喝醉:", R.drawable.a1m));
+      arrayList.add(new Message("肯德基", "情人节倒计时:", R.drawable.a1n));
+      arrayList.add(new Message("吃鸡群", "本来是:", R.drawable.a1i));
+      arrayList.add(new Message("订阅号", "苏州交警:", R.drawable.a1j));
+      arrayList.add(new Message("上海公积金", "喜迎春节:", R.drawable.a1k));
+      arrayList.add(new Message("NIGHT+ tech core team", "繁星海风:", R.drawable.a1l));
+      arrayList.add(new Message("腾讯新闻", "女子喝醉:", R.drawable.a1m));
+      arrayList.add(new Message("肯德基", "情人节倒计时:", R.drawable.a1n));
       if (arrayList != null) {
         ExploresViewItemAdapter exploresViewItemAdapter = new ExploresViewItemAdapter(getContext(), R.layout.item_view_explores, arrayList);
         listView.setAdapter(exploresViewItemAdapter);

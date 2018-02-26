@@ -46,7 +46,7 @@ public class Launch extends BaseActivity {
     setContentView(R.layout.activity_launch);
     ButterKnife.bind(this);
     setTranslucentStatus(true);
-    launchImage.setImageResource(R.drawable.welcome);
+//    launchImage.setImageResource(R.drawable.welcome);
     Observable.timer(400, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
       @Override
       public void accept(Long aLong) throws Exception {
@@ -61,6 +61,9 @@ public class Launch extends BaseActivity {
 //  }
 
   private void startAnim() {
+    startActivity(new Intent(Launch.this, MainActivity.class));
+    Launch.this.finish();
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
     ObjectAnimator animatorX = ObjectAnimator.ofFloat(launchImage, "scaleX", 1f, SCALE_END);
     ObjectAnimator animatorY = ObjectAnimator.ofFloat(launchImage, "scaleY", 1f, SCALE_END);

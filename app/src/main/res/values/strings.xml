@@ -19,6 +19,9 @@
   <string name="app_me_level_auth">身份验证</string>
   <string name="app_introduction_btn">进入APP</string>
 
+
+  <string name="me_wallet">钱包</string>
+
   <!-- ICONS -->
   <string name="app_icon_search">&#xf157;</string>
 </resources>

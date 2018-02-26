@@ -8,22 +8,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.goubaa.harry.nightplus.Library.CustomToast;
 import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.Message;
 import com.goubaa.harry.nightplus.R;
+import com.goubaa.harry.nightplus.Views.MainActivity;
 
 import java.util.List;
 
 /**
- * Created by harry on 2018/1/9.
+ * ExploresViewItemAdapter
+ *
+ * @author HarryTang
  */
-
 public class ExploresViewItemAdapter extends ArrayAdapter<Message> {
 
   private List<Message> messages;
-//  private LayoutInflater layoutInflater;
+  //  private LayoutInflater layoutInflater;
   private int resourceId;
 
   public ExploresViewItemAdapter(Context context, int resId, List<Message> messages) {
@@ -45,6 +49,25 @@ public class ExploresViewItemAdapter extends ArrayAdapter<Message> {
     messageTitle.setText(message.getTitle());
     messageDescription.setText(message.getDescription());
     messagePicture.setImageResource(message.getImage());
+
+    view.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        CustomToast.showShort(getContext(), "xxxx");
+      }
+    });
+
+    view.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View v) {
+        PopupMenu mPopupMenu = new PopupMenu(getContext(), v);
+        mPopupMenu.inflate(R.menu.menu_main_explores_item_normal);
+        mPopupMenu.show();
+        return false;
+      }
+    });
+
+
     return view;
   }
 
