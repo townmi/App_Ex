@@ -28,12 +28,15 @@ public class ScrollTopBehavior extends CoordinatorLayout.Behavior<View> {
   }
 
   @Override
-  public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+  public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View
+    child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
     return true;
   }
 
   @Override
-  public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
+  public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child,
+                             @NonNull View target, int dxConsumed, int dyConsumed, int
+                                 dxUnconsumed, int dyUnconsumed, int type) {
     offset(child, dyConsumed);
   }
 

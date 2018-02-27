@@ -11,8 +11,9 @@ package com.goubaa.harry.nightplus.Views.BannerActivity;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.goubaa.harry.nightplus.R;
 import com.squareup.picasso.Picasso;
-import com.youth.banner.loader.ImageLoader;
+import com.goubaa.harry.banner.loader.ImageLoader;
 
 /**
  * Created by harry on 2018/1/9.
@@ -21,8 +22,8 @@ import com.youth.banner.loader.ImageLoader;
 public class GlideImageLoader extends ImageLoader {
 
   @Override
-
   public void displayImage(Context context, Object path, ImageView imageView) {
-    Picasso.with(context).load(path.toString()).into(imageView);
+    int x = context.getResources().getDimensionPixelSize(R.dimen.x320);
+    Picasso.with(context).load(path.toString()).resize(x, x).centerCrop().into(imageView);
   }
 }

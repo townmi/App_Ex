@@ -73,4 +73,5 @@
     <item name="android:windowEnterAnimation">@anim/animation_main_menu_in</item>
     <item name="android:windowExitAnimation">@anim/animation_main_menu_out</item>
   </style>
+
 </resources>

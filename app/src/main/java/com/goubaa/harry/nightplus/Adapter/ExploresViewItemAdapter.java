@@ -1,21 +1,18 @@
 package com.goubaa.harry.nightplus.Adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.goubaa.harry.nightplus.Library.CustomToast;
-import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.Message;
 import com.goubaa.harry.nightplus.R;
-import com.goubaa.harry.nightplus.Views.MainActivity;
+import com.goubaa.harry.nightplus.Views.BannerActivity.BannerActivity;
 
 import java.util.List;
 
@@ -29,10 +26,12 @@ public class ExploresViewItemAdapter extends ArrayAdapter<Message> {
   private List<Message> messages;
   //  private LayoutInflater layoutInflater;
   private int resourceId;
+  private Context context;
 
   public ExploresViewItemAdapter(Context context, int resId, List<Message> messages) {
     super(context, resId, messages);
     this.messages = messages;
+    this.context = context;
     this.resourceId = resId;
 //    this.layoutInflater = LayoutInflater.from(context);
   }
@@ -53,7 +52,7 @@ public class ExploresViewItemAdapter extends ArrayAdapter<Message> {
     view.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        CustomToast.showShort(getContext(), "xxxx");
+        context.startActivity(new Intent(context, BannerActivity.class));
       }
     });
 

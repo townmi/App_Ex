@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.R;
 import com.goubaa.harry.nightplus.SessionApplication;
+import com.goubaa.harry.nightplus.Views.BannerActivity.BannerActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,25 +62,26 @@ public class Launch extends BaseActivity {
 //  }
 
   private void startAnim() {
-    startActivity(new Intent(Launch.this, MainActivity.class));
+    startActivity(new Intent(Launch.this, BannerActivity.class));
     Launch.this.finish();
-    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-    ObjectAnimator animatorX = ObjectAnimator.ofFloat(launchImage, "scaleX", 1f, SCALE_END);
-    ObjectAnimator animatorY = ObjectAnimator.ofFloat(launchImage, "scaleY", 1f, SCALE_END);
-
-    AnimatorSet set = new AnimatorSet();
-    set.setDuration(ANIMATION_TIME).play(animatorX).with(animatorY);
-    set.start();
-
-    set.addListener(new AnimatorListenerAdapter() {
-      @Override
-      public void onAnimationEnd(Animator animation) {
-        startActivity(new Intent(Launch.this, MainActivity.class));
-        Launch.this.finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-      }
-    });
+//    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//
+//    ObjectAnimator animatorX = ObjectAnimator.ofFloat(launchImage, "scaleX", 1f, SCALE_END);
+//    ObjectAnimator animatorY = ObjectAnimator.ofFloat(launchImage, "scaleY", 1f, SCALE_END);
+//
+//    AnimatorSet set = new AnimatorSet();
+//    set.setDuration(ANIMATION_TIME).play(animatorX).with(animatorY);
+//    set.start();
+//
+//    set.addListener(new AnimatorListenerAdapter() {
+//      @Override
+//      public void onAnimationEnd(Animator animation) {
+//        startActivity(new Intent(Launch.this, MainActivity.class));
+//        Launch.this.finish();
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//      }
+//    });
   }
 
 }

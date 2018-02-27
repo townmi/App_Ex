@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@id/bannerContainer"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clipChildren="false">
+
+  <com.goubaa.harry.banner.view.BannerViewPager
+    android:id="@id/bannerViewPager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_explores_banner_over"></LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:paddingBottom="@dimen/y5"
+    android:paddingLeft="@dimen/x13"
+    android:paddingRight="@dimen/x13">
+
+
+    <LinearLayout
+      android:id="@id/circleIndicator"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/titleView"
+      android:layout_gravity="bottom"
+      android:gravity="left"
+      android:orientation="horizontal"
+      android:visibility="gone" />
+
+    <TextView
+      android:id="@id/numIndicator"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_alignParentRight="true"
+      android:layout_margin="8dp"
+      android:background="@drawable/black_background"
+      android:gravity="center"
+      android:text="1/1"
+      android:textColor="#ffffff"
+      android:visibility="gone" />
+
+
+    <LinearLayout
+      android:id="@id/titleView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingBottom="@dimen/y4"
+      android:visibility="gone">
+
+      <TextView
+        android:id="@id/bannerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1000"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/local_bold"
+        android:gravity="center_vertical"
+        android:shadowColor="#ff000000"
+        android:shadowDx="2"
+        android:shadowDy="4"
+        android:shadowRadius="4"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:visibility="gone" />
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+          android:id="@id/numIndicatorInside"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:text="1/1"
+          android:textColor="#ffffff"
+          android:visibility="gone" />
+
+        <LinearLayout
+          android:id="@id/indicatorInside"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:visibility="gone" />
+      </FrameLayout>
+    </LinearLayout>
+
+  </RelativeLayout>
+
+  <ImageView
+    android:id="@+id/bannerDefaultImage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop"
+    android:visibility="gone" />
+</RelativeLayout>

@@ -48,7 +48,7 @@
     <activity
       android:name=".Views.BannerActivity.BannerActivity"
       android:launchMode="singleTop"
-      android:theme="@style/IntroductionTheme"></activity>
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
   </application>
 
 </manifest>
