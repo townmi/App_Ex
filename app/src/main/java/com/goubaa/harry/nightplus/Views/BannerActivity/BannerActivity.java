@@ -14,18 +14,20 @@ import android.support.constraint.ConstraintLayout;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.goubaa.harry.nightplus.Base.BaseActivity;
-import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseEntityObject;
-import com.goubaa.harry.nightplus.Base.BaseObserver;
 import com.goubaa.harry.nightplus.Base.BaseObserverObject;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.Library.LogUtil;
+import com.goubaa.harry.nightplus.Models.CmsView;
+import com.goubaa.harry.nightplus.Models.ExprolePosts;
+import com.goubaa.harry.nightplus.Models.SearchPost;
 import com.goubaa.harry.nightplus.R;
 import com.goubaa.harry.banner.Banner;
 import com.goubaa.harry.banner.BannerConfig;
 import com.goubaa.harry.nightplus.Models.ExproleBanner;
-import com.goubaa.harry.nightplus.Models.GraphqlRows;
 
 
 import java.util.ArrayList;
@@ -42,6 +44,12 @@ public class BannerActivity extends BaseActivity {
 
   @BindView(R.id.explores_top_buttons)
   LinearLayout linearLayout;
+
+  @BindView(R.id.explores_list)
+  ListView listView;
+
+  private List<String> images = new ArrayList<>();
+  private List<String> titles = new ArrayList<>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -80,37 +88,57 @@ public class BannerActivity extends BaseActivity {
 //    blurDrawable.setDrawOffset(0, 0);
 //    relativeLayout.setBackgroundDrawable(blurDrawable);
 
-
-    List<String> images = new ArrayList<>();
-    List<String> titles = new ArrayList<>();
-
-    images.add("http://ooa2erl8d.bkt.clouddn.com/f2ba339b3dc64ae6bc28484a120bf80a.jpg");
-    titles.add("春节假期夜晚玩乐大比拼");
-
-    images.add("http://ooa2erl8d.bkt.clouddn.com/728f1b098f1a44eea3e486d6af27e788.jpg");
-    titles.add("征集新年夜晚创意玩法");
-    banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
-    banner.setImages(images);
-    banner.setBannerTitles(titles);
-    banner.setImageLoader(new GlideImageLoader()).start();
-
+    /**
+     * fetch banners
+     */
     String query = "{view(isDisplayed:true,sectionType:\"community-banner\"," +
       "cityIds:[\"58d1ecade841a18ba5399026\"]){count," + "rows{_id,title,viewType,url,image, " +
       "articleId, subTitle,topic{id,topicName}}}}";
     getBanners(query);
 
+    getExplorePosts("58d1ecade841a18ba5399026");
+
   }
 
   private void getBanners(String query) {
-
-    Observable<BaseEntityObject<GraphqlRows<ExproleBanner>>> observable = RetrofitFactory
+    Observable<BaseEntityObject<ExproleBanner>> observable = RetrofitFactory
       .getCmsRetorfitService().getBanners(query);
-    observable.compose(compose(this.<BaseEntityObject<GraphqlRows<ExproleBanner>>>bindToLifecycle
-      ())).subscribe(new BaseObserverObject<GraphqlRows<ExproleBanner>>(getContext()) {
+    observable.compose(compose(this.<BaseEntityObject<ExproleBanner>>bindToLifecycle()))
+      .subscribe(new BaseObserverObject<ExproleBanner>(getContext()) {
       @Override
-      protected void onHandleSuccess(GraphqlRows<ExproleBanner> graphqlRows) {
-        int count = graphqlRows.getCount();
-        ArrayList<ExproleBanner> arrayList = graphqlRows.getRows();
+      protected void onHandleSuccess(ExproleBanner exproleBanner) {
+        ExproleBanner.ViewBean<CmsView> view = exproleBanner.getView();
+        List<CmsView> bannerList = view.getRows();
+        for (int i = 0; i < bannerList.size(); i++) {
+          CmsView banner = bannerList.get(i);
+          images.add(banner.getImage());
+          titles.add(banner.getTitle());
+        }
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setImages(images);
+        banner.setBannerTitles(titles);
+        banner.setImageLoader(new GlideImageLoader()).start();
+      }
+    });
+  }
+
+  private void getExplorePosts(String cityId) {
+    Observable<BaseEntityObject<ExprolePosts>> observable = RetrofitFactory
+      .getExplorePostsRetorfitService().getExplorePosts("-createdAt", 10, 0, cityId, true);
+    observable.compose(compose(this.<BaseEntityObject<ExprolePosts>>bindToLifecycle())).subscribe
+      (new BaseObserverObject<ExprolePosts>(getContext()) {
+      @Override
+      protected void onHandleSuccess(ExprolePosts exprolePosts) {
+        List<SearchPost> list = exprolePosts.getHits();
+        try {
+          if (list != null) {
+            ExploresPostViewItemAdapter exploresPostViewItemAdapter = new
+              ExploresPostViewItemAdapter(BannerActivity.this, R.layout.activity_banner_post, list);
+            listView.setAdapter(exploresPostViewItemAdapter);
+          }
+        } catch (NullPointerException e) {
+          LogUtil.error(e.getMessage());
+        }
       }
     });
   }

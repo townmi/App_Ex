@@ -132,6 +132,7 @@ dependencies {
   api 'jp.wasabeef:blurry:2.1.1'
   // picasso
   api 'com.squareup.picasso:picasso:2.5.2'
+  api 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
   // permission dispatcher
   api("com.github.hotchemi:permissionsdispatcher:${'3.1.0'}") {
     // if you don't use android.app.Fragment you can exclude support for them

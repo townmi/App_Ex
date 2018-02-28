@@ -7,13 +7,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.goubaa.harry.nightplus.Adapter.CityTypeAdapter;
 import com.goubaa.harry.nightplus.Adapter.ExploreBannerAdapter;
+import com.goubaa.harry.nightplus.Adapter.ExplorePostsAdapter;
 import com.goubaa.harry.nightplus.Adapter.PostTypeAdapter;
 import com.goubaa.harry.nightplus.Adapter.UserTypeAdapter;
 import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.Models.City;
+import com.goubaa.harry.nightplus.Models.ExproleBanner;
+import com.goubaa.harry.nightplus.Models.ExprolePosts;
 import com.goubaa.harry.nightplus.Models.Post;
 import com.goubaa.harry.nightplus.Models.User;
-import com.goubaa.harry.nightplus.Models.ExproleBanner;
 import com.goubaa.harry.nightplus.SessionApplication;
 
 import java.io.File;
@@ -42,6 +44,7 @@ public class RetrofitFactory {
   private static final String COMMUNITY_CORE_BASE_URL = "http://community.staging.ye-dian.com/";
   private static final String CMS_CORE_BASE_URL = "http://cmscore.staging.ye-dian.com/";
   private static final String USER_BASE_URL = "http://user.staging.ye-dian.com/";
+  private static final String SEARCH_BASE_URL = "http://search.staging.ye-dian.com/";
   private static final long TIMEOUT = 30;
 
   private static OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(new
@@ -91,6 +94,12 @@ public class RetrofitFactory {
     .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).client(httpClient).build().create
       (RetrofitService.class);
 
+  // home posts model
+  private static RetrofitService explorePostsRetorfitService = new Retrofit.Builder().baseUrl
+    (SEARCH_BASE_URL).addConverterFactory(GsonConverterFactory.create(buildExplorePostsGson()))
+    .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).client(httpClient).build().create
+      (RetrofitService.class);
+
   public static RetrofitService getInstance() {
     return retrofitService;
   }
@@ -109,6 +118,10 @@ public class RetrofitFactory {
 
   public static RetrofitService getCmsRetorfitService() {
     return cmsRetorfitService;
+  }
+
+  public static RetrofitService getExplorePostsRetorfitService() {
+    return explorePostsRetorfitService;
   }
 
   @NonNull
@@ -133,5 +146,11 @@ public class RetrofitFactory {
   private static Gson buildCmsGson() {
     return new GsonBuilder().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
       .registerTypeAdapter(ExproleBanner.class, new ExploreBannerAdapter()).create();
+  }
+
+  @NonNull
+  private static Gson buildExplorePostsGson() {
+    return new GsonBuilder().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+      .registerTypeAdapter(ExprolePosts.class, new ExplorePostsAdapter()).create();
   }
 }

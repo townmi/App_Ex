@@ -6,28 +6,43 @@
   android:layout_height="match_parent"
   tools:context="com.goubaa.harry.nightplus.Views.BannerActivity.BannerActivity">
 
-  <LinearLayout
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="@dimen/x320"
-    android:background="@color/colorBlack"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <com.goubaa.harry.banner.Banner
-      android:id="@+id/explores_banner"
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:banner_default_image="@drawable/ajax_loader"
-      app:banner_layout="@layout/activity_banner_local"
-      app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
-      app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
-      app:indicator_height="@dimen/y2"
-      app:indicator_margin="@dimen/x3"
-      app:indicator_selected_height="@dimen/y2"
-      app:indicator_selected_width="@dimen/x54"
-      app:indicator_width="@dimen/x27">
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
-    </com.goubaa.harry.banner.Banner>
-  </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x320"
+        android:background="@color/colorBlack"
+        android:orientation="vertical">
+
+        <com.goubaa.harry.banner.Banner
+          android:id="@+id/explores_banner"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:banner_default_image="@drawable/ajax_loader"
+          app:banner_layout="@layout/activity_banner_local"
+          app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
+          app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
+          app:indicator_height="@dimen/y2"
+          app:indicator_margin="@dimen/x3"
+          app:indicator_selected_height="@dimen/y2"
+          app:indicator_selected_width="@dimen/x54"
+          app:indicator_width="@dimen/x27"></com.goubaa.harry.banner.Banner>
+      </LinearLayout>
+
+      <com.goubaa.harry.nightplus.CustomViews.UnScrollListView
+        android:id="@+id/explores_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.goubaa.harry.nightplus.CustomViews.UnScrollListView>
+    </LinearLayout>
+  </ScrollView>
 
   <LinearLayout
     android:id="@+id/explores_top_buttons"

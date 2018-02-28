@@ -1,10 +1,10 @@
 package com.goubaa.harry.nightplus.Base;
 
 import com.goubaa.harry.nightplus.Models.City;
-import com.goubaa.harry.nightplus.Models.GraphqlRows;
+import com.goubaa.harry.nightplus.Models.ExproleBanner;
+import com.goubaa.harry.nightplus.Models.ExprolePosts;
 import com.goubaa.harry.nightplus.Models.Post;
 import com.goubaa.harry.nightplus.Models.User;
-import com.goubaa.harry.nightplus.Models.ExproleBanner;
 
 
 import io.reactivex.Observable;
@@ -24,5 +24,12 @@ public interface RetrofitService {
   Observable<BaseEntityObject<User>> getUserInfo();
 
   @GET("public/graphql")
-  Observable<BaseEntityObject<GraphqlRows<ExproleBanner>>> getBanners(@Query("query") String query);
+  Observable<BaseEntityObject<ExproleBanner>> getBanners(@Query("query") String query);
+
+
+  @GET("posts")
+  Observable<BaseEntityObject<ExprolePosts>> getExplorePosts(@Query("sort") String sort, @Query
+    ("limit")
+    int limit, @Query("offset") int offset, @Query("cityId") String cityId, @Query("isRecommend")
+    boolean isRecommend);
 }
