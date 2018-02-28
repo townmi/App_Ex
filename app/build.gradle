@@ -6,7 +6,7 @@ android {
   def currentVersion = getVersionCode()
   defaultConfig {
     applicationId "com.goubaa.harry.nightplus"
-    minSdkVersion 16
+    minSdkVersion 17
     targetSdkVersion 26
     versionCode currentVersion
     versionName "1.0.0"
