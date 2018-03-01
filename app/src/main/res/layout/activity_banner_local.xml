@@ -65,6 +65,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.375"
         android:shadowColor="#ff000000"
         android:shadowDx="2"
         android:shadowDy="4"

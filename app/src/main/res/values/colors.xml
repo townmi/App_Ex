@@ -5,7 +5,8 @@
   <color name="colorPrimaryDark">#303135</color>
   <color name="colorAccent">#FF4081</color>
   <color name="colorBlack">#000000</color>
-  <color name="colorLightBlack">#353535</color>
+  <color name="colorLightBlack">#333333</color>
+  <color name="colorPurple">#853FFB</color>
   <color name="colorBackground">#222222</color>
   <color name="colorGray">#666666</color>
   <color name="colorLightGray">#999999</color>

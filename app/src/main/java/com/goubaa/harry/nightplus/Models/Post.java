@@ -1,12 +1,13 @@
 package com.goubaa.harry.nightplus.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by harry on 2018/1/26.
  */
 
-public class Post {
+public class Post implements Serializable {
 
   /**
    * _id : 5a795333331dc9872b16c821
@@ -311,7 +312,7 @@ public class Post {
     this.tags = tags;
   }
 
-  public static class MessageBean {
+  public static class MessageBean implements Serializable {
     private List<?> images;
 
     public List<?> getImages() {
@@ -323,7 +324,7 @@ public class Post {
     }
   }
 
-  public static class PostedByBean {
+  public static class PostedByBean implements Serializable {
     /**
      * _id : e3ed09d0-ea08-11e7-ac14-6f05fd8e5559
      * userType : User
@@ -451,22 +452,22 @@ public class Post {
     }
   }
 
-  public static class DefaultComponentsBean {
+  public static class DefaultComponentsBean implements Serializable {
     /**
      * content : {"banner":["http://onq4xhob0.bkt.clouddn.com/55a6ff8ec6684c00924883556b7b1fe7"]}
      * type : picture
      * name : component-banner
      */
 
-    private ContentBean content;
+    private Object content;
     private String type;
     private String name;
 
-    public ContentBean getContent() {
+    public Object getContent() {
       return content;
     }
 
-    public void setContent(ContentBean content) {
+    public void setContent(Object content) {
       this.content = content;
     }
 
@@ -486,7 +487,7 @@ public class Post {
       this.name = name;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable {
       private List<String> banner;
 
       public List<String> getBanner() {
@@ -499,7 +500,7 @@ public class Post {
     }
   }
 
-  public static class CustomizedComponentsBean {
+  public static class CustomizedComponentsBean implements Serializable {
     /**
      * content : {"paragraph":"123\n123"}
      * name : component-paragraph
@@ -534,7 +535,7 @@ public class Post {
       this.type = type;
     }
 
-    public static class ContentBeanX {
+    public static class ContentBeanX implements Serializable {
       /**
        * paragraph : 123
        * 123
@@ -552,7 +553,7 @@ public class Post {
     }
   }
 
-  public static class InformersBean {
+  public static class InformersBean implements Serializable {
     /**
      * _id : 374dc730-058a-11e8-8daf-91d76e950780
      * userType : User
@@ -640,7 +641,7 @@ public class Post {
     }
   }
 
-  public static class TagsBean {
+  public static class TagsBean implements Serializable {
     /**
      * tag : shift
      * _id : 5a7aa499331dc9872b16c847

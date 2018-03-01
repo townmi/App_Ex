@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:useLevel="false">
+
+  <solid android:color="@color/colorWhite" />
+
+  <padding
+    android:bottom="@dimen/y3"
+    android:left="@dimen/x13"
+    android:right="@dimen/x13"
+    android:top="@dimen/y3" />
+
+  <stroke
+    android:width="@dimen/x1"
+    android:color="@color/colorLightGray" />
+  <corners android:radius="@dimen/x2" />
+  <!--边框宽度-->
+  <size
+    android:width="15dip"
+    android:height="15dip" />
+  <!--边框-->
+</shape>

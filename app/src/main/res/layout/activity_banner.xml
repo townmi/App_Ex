@@ -6,60 +6,89 @@
   android:layout_height="match_parent"
   tools:context="com.goubaa.harry.nightplus.Views.BannerActivity.BannerActivity">
 
-  <ScrollView
+  <in.srain.cube.views.ptr.PtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/explores_pull"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
-    android:scrollbars="none">
+    android:background="#fff"
+    cube_ptr:ptr_duration_to_close="300"
+    cube_ptr:ptr_duration_to_close_header="2000"
+    cube_ptr:ptr_keep_header_when_refresh="true"
+    cube_ptr:ptr_pull_to_fresh="false"
+    cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+    cube_ptr:ptr_resistance="1.7">
 
-    <LinearLayout
+    <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:layout_height="match_parent"
+      android:background="@color/colorBlack"
+      android:scrollbars="none">
 
       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x320"
-        android:layout_marginBottom="@dimen/y12"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.goubaa.harry.banner.Banner
-          android:id="@+id/explores_banner"
+        <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          app:banner_default_image="@drawable/ajax_loader"
-          app:banner_layout="@layout/activity_banner_local"
-          app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
-          app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
-          app:indicator_height="@dimen/y2"
-          app:indicator_margin="@dimen/x3"
-          app:indicator_selected_height="@dimen/y2"
-          app:indicator_selected_width="@dimen/x54"
-          app:indicator_width="@dimen/x27"></com.goubaa.harry.banner.Banner>
+          android:layout_height="@dimen/x320"
+          android:layout_marginBottom="@dimen/y12"
+          android:orientation="vertical">
+
+          <com.goubaa.harry.banner.Banner
+            android:id="@+id/explores_banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:banner_default_image="@drawable/ajax_loader"
+            app:banner_layout="@layout/activity_banner_local"
+            app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
+            app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
+            app:indicator_height="@dimen/y2"
+            app:indicator_margin="@dimen/x3"
+            app:indicator_selected_height="@dimen/y2"
+            app:indicator_selected_width="@dimen/x54"
+            app:indicator_width="@dimen/x27"></com.goubaa.harry.banner.Banner>
+        </LinearLayout>
+
+        <com.goubaa.harry.nightplus.CustomViews.CustomListView
+          android:id="@+id/explores_list"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"></com.goubaa.harry.nightplus.CustomViews.CustomListView>
       </LinearLayout>
 
-      <com.goubaa.harry.nightplus.CustomViews.UnScrollListView
-        android:id="@+id/explores_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/x8"
-        android:paddingRight="@dimen/x8"></com.goubaa.harry.nightplus.CustomViews.UnScrollListView>
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
+  </in.srain.cube.views.ptr.PtrFrameLayout>
+
 
   <LinearLayout
     android:id="@+id/explores_top_buttons"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y34">
+    android:layout_height="@dimen/y34"
+    android:background="@color/main_explores_top_bar_background">
 
     <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/main_explores_top_bar_background">
+      android:layout_height="wrap_content">
+
+      <ImageButton
+        android:id="@+id/explores_title_location"
+        android:layout_width="@dimen/x43"
+        android:layout_height="@dimen/y24"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/holo_red_dark" />
 
       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y13"></LinearLayout>
+        android:layout_height="@dimen/y24"></LinearLayout>
+
+      <ImageButton
+        android:id="@+id/explores_title_user"
+        android:layout_width="@dimen/x43"
+        android:layout_height="@dimen/y24"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/holo_red_dark" />
     </RelativeLayout>
   </LinearLayout>
 

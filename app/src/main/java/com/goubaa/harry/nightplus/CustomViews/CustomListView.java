@@ -8,17 +8,17 @@ import android.widget.ListView;
  * Created by harry on 2018/2/28.
  */
 
-public class UnScrollListView extends ListView {
+public class CustomListView extends ListView {
 
-  public UnScrollListView(Context context) {
+  public CustomListView(Context context) {
     super(context);
   }
 
-  public UnScrollListView(Context context, AttributeSet attrs) {
+  public CustomListView(Context context, AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public UnScrollListView(Context context, AttributeSet attrs, int defStyleAttr) {
+  public CustomListView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
   }
 

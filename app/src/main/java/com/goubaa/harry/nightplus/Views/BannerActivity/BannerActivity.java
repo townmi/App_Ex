@@ -43,7 +43,7 @@ public class BannerActivity extends BaseActivity {
   Banner banner;
 
   @BindView(R.id.explores_top_buttons)
-  LinearLayout linearLayout;
+  LinearLayout buttons;
 
   @BindView(R.id.explores_list)
   ListView listView;
@@ -68,13 +68,16 @@ public class BannerActivity extends BaseActivity {
 
     Resources resources = getResources();
     int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-    int height = resources.getDimensionPixelSize(resourceId) + getResources()
-      .getDimensionPixelSize(R.dimen.y25);
+    int statusBarHeight = resources.getDimensionPixelSize(resourceId);
 
-    ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) linearLayout
+
+    int height = statusBarHeight + getResources().getDimensionPixelSize(R.dimen.y24);
+
+    ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) buttons
       .getLayoutParams();
     layoutParams.height = height;
-    linearLayout.setLayoutParams(layoutParams);
+    buttons.setLayoutParams(layoutParams);
+    buttons.setPadding(0, statusBarHeight, 0, 0);
 
 
 //    Blurry.with(BannerActivity.this).radius(25).sampling(2).onto(relativeLayout);
@@ -93,7 +96,7 @@ public class BannerActivity extends BaseActivity {
      */
     String query = "{view(isDisplayed:true,sectionType:\"community-banner\"," +
       "cityIds:[\"58d1ecade841a18ba5399026\"]){count," + "rows{_id,title,viewType,url,image, " +
-      "articleId, subTitle,topic{id,topicName}}}}";
+      "articleId, subTitle," + "topic{id,topicName}}}}";
     getBanners(query);
 
     getExplorePosts("58d1ecade841a18ba5399026");

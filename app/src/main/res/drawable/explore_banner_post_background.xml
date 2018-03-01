@@ -1,52 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-  <item>
-    <shape android:shape="rectangle">
-      <padding android:top="1px" />
-      <padding android:right="1px" />
-      <padding android:bottom="1px" />
-      <padding android:left="1px" />
-      <solid android:color="@android:color/transparent" />
-      <corners android:radius="1px" />
-    </shape>
-  </item>
-  <item>
-    <shape android:shape="rectangle">
-      <padding android:top="1px" />
-      <padding android:right="1px" />
-      <padding android:bottom="1px" />
-      <padding android:left="1px" />
-      <solid android:color="#40000000" />
-      <corners android:radius="1px" />
-    </shape>
-  </item>
-  <item>
-    <shape android:shape="rectangle">
-      <padding android:top="1px" />
-      <padding android:right="1px" />
-      <padding android:bottom="1px" />
-      <padding android:left="1px" />
-      <solid android:color="#80000000" />
-      <corners android:radius="1px" />
-    </shape>
-  </item>
-  <item>
-    <shape android:shape="rectangle">
-      <padding android:top="1px" />
-      <padding android:right="1px" />
-      <padding android:bottom="1px" />
-      <padding android:left="1px" />
-      <solid android:color="#c0000000" />
-      <corners android:radius="1px" />
-    </shape>
-  </item>
-
   <!-- Background -->
   <item>
     <shape android:shape="rectangle">
       <solid android:color="@color/colorWhite" />
-      <corners android:radius="@dimen/x7" />
+      <corners
+        android:bottomLeftRadius="@dimen/x7"
+        android:bottomRightRadius="@dimen/x7"
+        android:topLeftRadius="@dimen/x7"
+        android:topRightRadius="@dimen/x7" />
     </shape>
   </item>
 </layer-list>

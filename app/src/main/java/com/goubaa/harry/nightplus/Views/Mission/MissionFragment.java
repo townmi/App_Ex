@@ -83,7 +83,8 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+    savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_mission, container, false);
     ButterKnife.bind(this, view);
@@ -110,7 +111,8 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
       mListener = (OnFragmentInteractionListener) context;
       getPost("5a658edebc02c25463dd425f");
     } else {
-      throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " +
+        "OnFragmentInteractionListener");
     }
   }
 
@@ -162,14 +164,16 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
 
   private void getPost(String id) {
 
-    Observable<BaseEntity<Post>> observable = RetrofitFactory.getCommunityCoreRetrofitService().getPosts(id);
-    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe(new BaseObserver<Post>(getContext()) {
+    Observable<BaseEntity<Post>> observable = RetrofitFactory.getCommunityCoreRetrofitService()
+      .getPosts(id);
+    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe(new
+                                                                                      BaseObserver<Post>(getContext()) {
       @Override
       protected void onHandleSuccess(ArrayList<Post> arrayList) {
         Post post;
         String _id = "";
         try {
-          if (arrayList != null) {
+          if (arrayList != null && arrayList.size() > 0) {
             post = arrayList.get(0);
             _id = post.get_id();
             LogUtil.info(_id);

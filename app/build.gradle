@@ -125,9 +125,13 @@ dependencies {
   // RxLifecycle
   api 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
   // BottomBar
-  api 'com.roughike:bottom-bar:2.3.1'
+//  api 'com.roughike:bottom-bar:2.3.1'
   // banner
 //  api 'com.youth.banner:banner:1.4.10'
+  // refresh
+  api 'in.srain.cube:ultra-ptr:1.0.11'
+  // tags
+  api 'co.lujun:androidtagview:1.1.4'
   // blur
   api 'jp.wasabeef:blurry:2.1.1'
   // picasso

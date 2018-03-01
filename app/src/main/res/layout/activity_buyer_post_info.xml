@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="com.goubaa.harry.nightplus.Views.BuyerPostInfo.BuyerPostInfo">
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBlack"
+    android:scrollbars="none">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x320"
+        android:layout_marginBottom="@dimen/y12"
+        android:orientation="vertical">
+
+        <com.goubaa.harry.banner.Banner
+          android:id="@+id/buyer_post_banner"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:banner_default_image="@drawable/ajax_loader"
+          app:banner_layout="@layout/activity_banner_local"
+          app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
+          app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
+          app:indicator_height="@dimen/y2"
+          app:indicator_margin="@dimen/x3"
+          app:indicator_selected_height="@dimen/y2"
+          app:indicator_selected_width="@dimen/x54"
+          app:indicator_width="@dimen/x27"></com.goubaa.harry.banner.Banner>
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -40,7 +40,7 @@
     <activity
       android:name=".Views.MainActivity"
       android:launchMode="singleTop"
-      android:theme="@style/AppTheme" />
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     <activity
       android:name=".Views.IntroductionActivity"
       android:launchMode="singleTop"
@@ -48,7 +48,12 @@
     <activity
       android:name=".Views.BannerActivity.BannerActivity"
       android:launchMode="singleTop"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <activity
+      android:name=".Views.BuyerPostInfo.BuyerPostInfo"
+      android:launchMode="singleTop"
       android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
   </application>
 
 </manifest>
