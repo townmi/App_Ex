@@ -31,8 +31,8 @@ public class VenueListFragment extends BaseFragment implements ViewPager.OnPageC
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
 
-//  @BindView(R.id.venue_list_icon_search)
-//  TextView textViewVenueListIconSearch;
+  @BindView(R.id.venue_list_icon_search)
+  TextView textViewVenueListIconSearch;
 
   // TODO: Rename and change types of parameters
   private String mParam1;
@@ -72,14 +72,14 @@ public class VenueListFragment extends BaseFragment implements ViewPager.OnPageC
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+    savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_venue_list, container, false);
     ButterKnife.bind(this, view);
 
-//    Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "icons.ttf");
-//    textViewVenueListIconSearch.setTypeface(typeface);
+    Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "ionicons.ttf");
+    textViewVenueListIconSearch.setTypeface(typeface);
     return view;
   }
 
@@ -96,8 +96,8 @@ public class VenueListFragment extends BaseFragment implements ViewPager.OnPageC
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString()
-        + " must implement OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " +
+        "OnFragmentInteractionListener");
     }
   }
 

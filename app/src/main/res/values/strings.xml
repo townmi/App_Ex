@@ -1,5 +1,6 @@
 <resources>
   <string name="app_name">Night+</string>
+  <string name="app_introduction_btn">开始体验</string>
 
   <string name="app_main_title">微信</string>
   <string name="app_main_action_group">发起群聊</string>
@@ -17,11 +18,14 @@
   <string name="app_me_switch">使用BNB支付交易手续费(50%折扣)</string>
   <string name="app_me_id">超级返利</string>
   <string name="app_me_level_auth">身份验证</string>
-  <string name="app_introduction_btn">进入APP</string>
 
 
   <string name="me_wallet">钱包</string>
 
   <!-- ICONS -->
-  <string name="app_icon_search">&#xf157;</string>
+  <string name="ion_arrow_left">&#xf170;</string>
+  <string name="ion_comment">&#xf16f;</string>
+  <string name="ion_date">&#xf171;</string>
+  <string name="ion_member">&#xf173;</string>
+  <string name="ion_location">&#xf1ff;</string>
 </resources>

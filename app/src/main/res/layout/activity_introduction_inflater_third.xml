@@ -16,17 +16,23 @@
 
     <Button
       android:id="@+id/introduction_btn"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/follow_btn"
+      android:layout_width="@dimen/x218"
+      android:layout_height="@dimen/y33"
       android:layout_above="@+id/image"
       android:layout_alignParentBottom="true"
-      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:layout_marginVertical="@dimen/y78"
+      android:background="@drawable/introduction_inflater_button_background"
       android:layout_marginBottom="10dp"
       android:layout_marginRight="10dp"
+      android:layout_centerInParent="true"
       android:text="@string/app_introduction_btn"
       android:textAlignment="center"
-      android:textColor="@color/colorLightBlack"
+      android:textColor="@color/colorWhite"
       android:textSize="16sp"
+      android:lineSpacingMultiplier="1.43"
+      android:stateListAnimator="@null"
       android:visibility="visible" />
   </RelativeLayout>
 </LinearLayout>

@@ -9,12 +9,16 @@
 package com.goubaa.harry.nightplus.Views.BannerActivity;
 
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.Base.BaseEntityObject;
@@ -45,11 +49,19 @@ public class BannerActivity extends BaseActivity {
   @BindView(R.id.explores_top_buttons)
   LinearLayout buttons;
 
+  @BindView(R.id.explores_title_location)
+  TextView location;
+
+  @BindView(R.id.explores_title_member)
+  TextView member;
+
   @BindView(R.id.explores_list)
   ListView listView;
 
   private List<String> images = new ArrayList<>();
   private List<String> titles = new ArrayList<>();
+
+  private Typeface typeface;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +83,7 @@ public class BannerActivity extends BaseActivity {
     int statusBarHeight = resources.getDimensionPixelSize(resourceId);
 
 
-    int height = statusBarHeight + getResources().getDimensionPixelSize(R.dimen.y24);
+    int height = statusBarHeight + resources.getDimensionPixelSize(R.dimen.x36);
 
     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) buttons
       .getLayoutParams();
@@ -79,6 +91,10 @@ public class BannerActivity extends BaseActivity {
     buttons.setLayoutParams(layoutParams);
     buttons.setPadding(0, statusBarHeight, 0, 0);
 
+
+    typeface = Typeface.createFromAsset(resources.getAssets(), "ionicons.ttf");
+    location.setTypeface(typeface);
+    member.setTypeface(typeface);
 
 //    Blurry.with(BannerActivity.this).radius(25).sampling(2).onto(relativeLayout);
     //

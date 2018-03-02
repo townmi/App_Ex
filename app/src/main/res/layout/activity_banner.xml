@@ -59,36 +59,51 @@
     </ScrollView>
   </in.srain.cube.views.ptr.PtrFrameLayout>
 
-
   <LinearLayout
     android:id="@+id/explores_top_buttons"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y34"
+    android:layout_height="@dimen/y48"
     android:background="@color/main_explores_top_bar_background">
 
     <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 
-      <ImageButton
+      <TextView
         android:id="@+id/explores_title_location"
         android:layout_width="@dimen/x43"
-        android:layout_height="@dimen/y24"
+        android:layout_height="@dimen/y36"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@android:color/holo_red_dark" />
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:paddingBottom="@dimen/x1"
+        android:text="@string/ion_location"
+        android:textAlignment="center"
+        android:textColor="@color/colorMoreLightGray"
+        android:textSize="@dimen/x24" />
 
       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y24"></LinearLayout>
+        android:layout_height="@dimen/y36">
 
-      <ImageButton
-        android:id="@+id/explores_title_user"
+
+
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/explores_title_member"
         android:layout_width="@dimen/x43"
-        android:layout_height="@dimen/y24"
+        android:layout_height="@dimen/y36"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@android:color/holo_red_dark" />
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:paddingBottom="@dimen/x1"
+        android:text="@string/ion_member"
+        android:textAlignment="center"
+        android:textColor="@color/colorMoreLightGray"
+        android:textSize="@dimen/x24" />
     </RelativeLayout>
   </LinearLayout>
 

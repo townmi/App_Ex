@@ -3,7 +3,6 @@ package com.goubaa.harry.nightplus.Views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import com.goubaa.harry.nightplus.Adapter.IntroductionViewPagerAdatper;
 import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.R;
 import com.goubaa.harry.nightplus.SessionApplication;
+import com.goubaa.harry.nightplus.Views.BannerActivity.BannerActivity;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class IntroductionActivity extends BaseActivity {
         editor.putString("INTRODUCTION", "read");
         editor.commit();
 
-        startActivity(new Intent(IntroductionActivity.this, MainActivity.class));
+        startActivity(new Intent(IntroductionActivity.this, BannerActivity.class));
         IntroductionActivity.this.finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
       }

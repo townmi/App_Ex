@@ -10,6 +10,7 @@
   <color name="colorBackground">#222222</color>
   <color name="colorGray">#666666</color>
   <color name="colorLightGray">#999999</color>
+  <color name="colorMoreLightGray">#CCCCCC</color>
   <color name="colorWhite">#FFFFFF</color>
 
   <color name="main_explores_top_bar_background">#cc000000</color>
