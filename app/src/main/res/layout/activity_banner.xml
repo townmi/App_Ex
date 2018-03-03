@@ -18,45 +18,11 @@
     cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
     cube_ptr:ptr_resistance="1.7">
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
+      android:id="@+id/explores_view_pager"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/colorBlack"
-      android:scrollbars="none">
+      android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/x320"
-          android:layout_marginBottom="@dimen/y12"
-          android:orientation="vertical">
-
-          <com.goubaa.harry.banner.Banner
-            android:id="@+id/explores_banner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:banner_default_image="@drawable/ajax_loader"
-            app:banner_layout="@layout/activity_banner_local"
-            app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
-            app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
-            app:indicator_height="@dimen/y2"
-            app:indicator_margin="@dimen/x3"
-            app:indicator_selected_height="@dimen/y2"
-            app:indicator_selected_width="@dimen/x54"
-            app:indicator_width="@dimen/x27"></com.goubaa.harry.banner.Banner>
-        </LinearLayout>
-
-        <com.goubaa.harry.nightplus.CustomViews.CustomListView
-          android:id="@+id/explores_list"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"></com.goubaa.harry.nightplus.CustomViews.CustomListView>
-      </LinearLayout>
-
-    </ScrollView>
   </in.srain.cube.views.ptr.PtrFrameLayout>
 
   <LinearLayout
@@ -87,7 +53,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y36">
 
-
+        <android.support.design.widget.TabLayout
+          android:id="@+id/explores_tab"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"></android.support.design.widget.TabLayout>
 
       </LinearLayout>
 

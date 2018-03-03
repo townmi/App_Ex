@@ -12,6 +12,11 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -24,6 +29,7 @@ import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.Base.BaseEntityObject;
 import com.goubaa.harry.nightplus.Base.BaseObserverObject;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.CustomViews.ShadeView;
 import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.Models.CmsView;
 import com.goubaa.harry.nightplus.Models.ExprolePosts;
@@ -41,10 +47,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
-public class BannerActivity extends BaseActivity {
+public class BannerActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
+  .OnClickListener {
 
-  @BindView(R.id.explores_banner)
-  Banner banner;
+  @BindView(R.id.explores_view_pager)
+  ViewPager viewPager;
+
+  @BindView(R.id.explores_tab)
+  TabLayout tab;
 
   @BindView(R.id.explores_top_buttons)
   LinearLayout buttons;
@@ -55,13 +65,34 @@ public class BannerActivity extends BaseActivity {
   @BindView(R.id.explores_title_member)
   TextView member;
 
-  @BindView(R.id.explores_list)
-  ListView listView;
-
-  private List<String> images = new ArrayList<>();
-  private List<String> titles = new ArrayList<>();
 
   private Typeface typeface;
+  private List<Fragment> fragmentList;
+
+  @Override
+  public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.main_tab_one:
+        viewPager.setCurrentItem(0, false);
+        break;
+
+      case R.id.main_tab_two:
+        viewPager.setCurrentItem(1, false);
+        break;
+    }
+  }
+
+  @Override
+  public void onPageSelected(int position) {
+  }
+
+  @Override
+  public void onPageScrollStateChanged(int state) {
+  }
+
+  @Override
+  public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +127,50 @@ public class BannerActivity extends BaseActivity {
     location.setTypeface(typeface);
     member.setTypeface(typeface);
 
+
+    ArrayList<String> titles = new ArrayList<>();
+    titles.add("最新");
+    titles.add("最热");
+
+    tab.getTabAt(0).setText(titles.get(0));
+    tab.getTabAt(1).setText(titles.get(1));
+
+    fragmentList = new ArrayList<>();
+    Fragment exploresChoiceFragment = ExploresChoiceFragment.newInstance("", "");
+    Fragment exploresFollowFragment = ExploresFollowFragment.newInstance("", "");
+    fragmentList.add(exploresChoiceFragment);
+    fragmentList.add(exploresFollowFragment);
+
+
+    viewPager.setOffscreenPageLimit(1);
+    viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+      @Override
+      public Fragment getItem(int position) {
+        return fragmentList.get(position);
+      }
+
+      @Override
+      public int getCount() {
+        return fragmentList.size();
+      }
+
+      @Override
+      public void destroyItem(View container, int position, Object object) {
+        super.destroyItem(container, position, object);
+      }
+    });
+    viewPager.addOnPageChangeListener(this);
+
+    tab.setupWithViewPager(viewPager);
+    viewPager.setCurrentItem(0, false);
+  }
+
+
+}
+
+
 //    Blurry.with(BannerActivity.this).radius(25).sampling(2).onto(relativeLayout);
-    //
+//
 
 //    BlurDrawable blurDrawable = new BlurDrawable(banner);
 //    blurDrawable.setBlurRadius(8);
@@ -106,59 +179,3 @@ public class BannerActivity extends BaseActivity {
 // .main_explores_top_bar_background));
 //    blurDrawable.setDrawOffset(0, 0);
 //    relativeLayout.setBackgroundDrawable(blurDrawable);
-
-    /**
-     * fetch banners
-     */
-    String query = "{view(isDisplayed:true,sectionType:\"community-banner\"," +
-      "cityIds:[\"58d1ecade841a18ba5399026\"]){count," + "rows{_id,title,viewType,url,image, " +
-      "articleId, subTitle," + "topic{id,topicName}}}}";
-    getBanners(query);
-
-    getExplorePosts("58d1ecade841a18ba5399026");
-
-  }
-
-  private void getBanners(String query) {
-    Observable<BaseEntityObject<ExproleBanner>> observable = RetrofitFactory
-      .getCmsRetorfitService().getBanners(query);
-    observable.compose(compose(this.<BaseEntityObject<ExproleBanner>>bindToLifecycle()))
-      .subscribe(new BaseObserverObject<ExproleBanner>(getContext()) {
-      @Override
-      protected void onHandleSuccess(ExproleBanner exproleBanner) {
-        ExproleBanner.ViewBean<CmsView> view = exproleBanner.getView();
-        List<CmsView> bannerList = view.getRows();
-        for (int i = 0; i < bannerList.size(); i++) {
-          CmsView banner = bannerList.get(i);
-          images.add(banner.getImage());
-          titles.add(banner.getTitle());
-        }
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
-        banner.setImages(images);
-        banner.setBannerTitles(titles);
-        banner.setImageLoader(new GlideImageLoader()).start();
-      }
-    });
-  }
-
-  private void getExplorePosts(String cityId) {
-    Observable<BaseEntityObject<ExprolePosts>> observable = RetrofitFactory
-      .getExplorePostsRetorfitService().getExplorePosts("-createdAt", 10, 0, cityId, true);
-    observable.compose(compose(this.<BaseEntityObject<ExprolePosts>>bindToLifecycle())).subscribe
-      (new BaseObserverObject<ExprolePosts>(getContext()) {
-      @Override
-      protected void onHandleSuccess(ExprolePosts exprolePosts) {
-        List<SearchPost> list = exprolePosts.getHits();
-        try {
-          if (list != null) {
-            ExploresPostViewItemAdapter exploresPostViewItemAdapter = new
-              ExploresPostViewItemAdapter(BannerActivity.this, R.layout.activity_banner_post, list);
-            listView.setAdapter(exploresPostViewItemAdapter);
-          }
-        } catch (NullPointerException e) {
-          LogUtil.error(e.getMessage());
-        }
-      }
-    });
-  }
-}

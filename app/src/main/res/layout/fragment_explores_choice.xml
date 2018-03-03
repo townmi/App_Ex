@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="com.goubaa.harry.nightplus.Views.BannerActivity.ExploresChoiceFragment">
+
+  <!-- TODO: Update blank fragment layout -->
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    android:scrollbars="none">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x320"
+        android:layout_marginBottom="@dimen/y12"
+        android:orientation="vertical">
+
+        <com.goubaa.harry.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/explores_banner"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:banner_default_image="@drawable/ajax_loader"
+          app:banner_layout="@layout/activity_banner_local"
+          app:indicator_drawable_selected="@drawable/main_explores_banner_indicator_selected"
+          app:indicator_drawable_unselected="@drawable/main_explores_banner_indicator_unselected"
+          app:indicator_height="@dimen/y2"
+          app:indicator_margin="@dimen/x3"
+          app:indicator_selected_height="@dimen/y2"
+          app:indicator_selected_width="@dimen/x54"
+          app:indicator_width="@dimen/x27"></com.goubaa.harry.banner.Banner>
+      </LinearLayout>
+
+      <com.goubaa.harry.nightplus.CustomViews.CustomListView
+        android:id="@+id/explores_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.goubaa.harry.nightplus.CustomViews.CustomListView>
+    </LinearLayout>
+
+  </ScrollView>
+</FrameLayout>

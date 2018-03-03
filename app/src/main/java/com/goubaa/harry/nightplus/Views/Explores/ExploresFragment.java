@@ -48,7 +48,8 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+    savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_explores, container, false);
     ButterKnife.bind(this, view);
@@ -93,7 +94,8 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
       arrayList.add(new Message("腾讯新闻", "女子喝醉:", R.drawable.a1m));
       arrayList.add(new Message("肯德基", "情人节倒计时:", R.drawable.a1n));
       if (arrayList != null) {
-        ExploresViewItemAdapter exploresViewItemAdapter = new ExploresViewItemAdapter(getContext(), R.layout.item_view_explores, arrayList);
+        ExploresViewItemAdapter exploresViewItemAdapter = new ExploresViewItemAdapter(getContext
+          (), R.layout.item_view_explores, arrayList);
         listView.setAdapter(exploresViewItemAdapter);
       }
     } catch (NullPointerException e) {
@@ -120,7 +122,8 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
     if (context instanceof MeFragment.OnFragmentInteractionListener) {
       mListener = (MeFragment.OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString() + " must implement " + "OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " +
+        "OnFragmentInteractionListener");
     }
   }
 
@@ -173,7 +176,8 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
   private void getStudents() {
 
     Observable<BaseEntity<City>> observable = RetrofitFactory.getInstance().getCities();
-    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new BaseObserver<City>(getContext()) {
+    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new
+                                                                                      BaseObserver<City>(getContext()) {
       @Override
       protected void onHandleSuccess(ArrayList<City> arrayList) {
         City city;
