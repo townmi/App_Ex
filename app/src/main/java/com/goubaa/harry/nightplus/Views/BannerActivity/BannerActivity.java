@@ -10,34 +10,22 @@ package com.goubaa.harry.nightplus.Views.BannerActivity;
 
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.goubaa.harry.nightplus.Base.BaseActivity;
-import com.goubaa.harry.nightplus.Base.BaseEntityObject;
-import com.goubaa.harry.nightplus.Base.BaseObserverObject;
-import com.goubaa.harry.nightplus.Base.RetrofitFactory;
-import com.goubaa.harry.nightplus.CustomViews.ShadeView;
-import com.goubaa.harry.nightplus.Library.LogUtil;
-import com.goubaa.harry.nightplus.Models.CmsView;
-import com.goubaa.harry.nightplus.Models.ExprolePosts;
-import com.goubaa.harry.nightplus.Models.SearchPost;
 import com.goubaa.harry.nightplus.R;
-import com.goubaa.harry.banner.Banner;
-import com.goubaa.harry.banner.BannerConfig;
-import com.goubaa.harry.nightplus.Models.ExproleBanner;
 
 
 import java.util.ArrayList;
@@ -45,10 +33,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 
 public class BannerActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
-  .OnClickListener {
+  .OnClickListener, ExploresChoiceFragment.OnFragmentInteractionListener, ExploresFollowFragment.OnFragmentInteractionListener {
 
   @BindView(R.id.explores_view_pager)
   ViewPager viewPager;
@@ -129,11 +116,11 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
 
 
     ArrayList<String> titles = new ArrayList<>();
-    titles.add("最新");
-    titles.add("最热");
+    titles.add("");
+    titles.add("");
 
-    tab.getTabAt(0).setText(titles.get(0));
-    tab.getTabAt(1).setText(titles.get(1));
+//    tab.addTab(tab.newTab().setText("最新"));
+//    tab.addTab(tab.newTab().setText("最热"));
 
     fragmentList = new ArrayList<>();
     Fragment exploresChoiceFragment = ExploresChoiceFragment.newInstance("", "");
@@ -162,10 +149,27 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
     viewPager.addOnPageChangeListener(this);
 
     tab.setupWithViewPager(viewPager);
+
+    tab.getTabAt(0).setCustomView(getTabChoiceView(0));
+    tab.getTabAt(1).setCustomView(getTabFollowView(1));
+
     viewPager.setCurrentItem(0, false);
   }
 
+  @Override
+  public void onFragmentInteraction(Uri uri) {
 
+  }
+
+  private View getTabChoiceView(final int position) {
+    View view = LayoutInflater.from(BannerActivity.this).inflate(R.layout.activity_banner_tab_item_choice, null);
+    return view;
+  }
+
+  private View getTabFollowView(final int position) {
+    View view = LayoutInflater.from(BannerActivity.this).inflate(R.layout.activity_banner_tab_item_follow, null);
+    return view;
+  }
 }
 
 

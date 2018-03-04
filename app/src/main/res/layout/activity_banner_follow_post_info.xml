@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:paddingLeft="@dimen/x13"
+  android:paddingRight="@dimen/x13"
+  android:paddingTop="@dimen/y8">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/explore_banner_follow_post_background"
+    android:orientation="vertical"
+    android:padding="@dimen/x13">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/x48"
+      android:layout_marginBottom="@dimen/y5"
+      android:gravity="center">
+
+      <ImageButton
+        android:id="@+id/explores_list_follow_post_author_picture"
+        android:layout_width="@dimen/x48"
+        android:layout_height="@dimen/x48"
+        android:background="@android:color/transparent" />
+
+      <TextView
+        android:id="@+id/explores_list_follow_post_author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/explores_list_follow_post_date"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/explores_list_follow_post_date"
+        android:layout_marginTop="@dimen/y2"
+        android:lineSpacingMultiplier="1.43"
+        android:text="元宵节"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="18sp" />
+
+      <TextView
+        android:id="@+id/explores_list_follow_post_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/y2"
+        android:layout_marginLeft="@dimen/x8"
+        android:layout_toEndOf="@+id/explores_list_follow_post_author_picture"
+        android:layout_toRightOf="@+id/explores_list_follow_post_author_picture"
+        android:lineSpacingMultiplier="1.43"
+        android:text="我们北方是吃元宵哒"
+        android:textColor="@color/colorLightGray"
+        android:textSize="14sp" />
+
+      <Button
+        android:id="@+id/explores_list_follow_post_author_follow"
+        style="@style/follow_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:lineSpacingMultiplier="1.43"
+        android:stateListAnimator="@null"
+        android:text="关注"
+        android:textColor="@color/colorLightGray"
+        android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/y5"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/explores_list_follow_post_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/explores_list_follow_post_pictures"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"></LinearLayout>
+  </LinearLayout>
+</LinearLayout>

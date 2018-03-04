@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ import io.reactivex.Observable;
  * Use the {@link ExploresChoiceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExploresChoiceFragment extends BaseFragment {
+public class ExploresChoiceFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -146,6 +147,22 @@ public class ExploresChoiceFragment extends BaseFragment {
     void onFragmentInteraction(Uri uri);
   }
 
+
+  @Override
+  public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+  }
+
+  @Override
+  public void onPageScrollStateChanged(int state) {
+
+  }
+
+  @Override
+  public void onPageSelected(int position) {
+
+  }
+
   @Override
   public boolean hasMultiFragment() {
     return false;
@@ -161,21 +178,21 @@ public class ExploresChoiceFragment extends BaseFragment {
       .getCmsRetorfitService().getBanners(query);
     observable.compose(compose(this.<BaseEntityObject<ExproleBanner>>bindToLifecycle()))
       .subscribe(new BaseObserverObject<ExproleBanner>(getContext()) {
-      @Override
-      protected void onHandleSuccess(ExproleBanner exproleBanner) {
-        ExproleBanner.ViewBean<CmsView> view = exproleBanner.getView();
-        List<CmsView> bannerList = view.getRows();
-        for (int i = 0; i < bannerList.size(); i++) {
-          CmsView banner = bannerList.get(i);
-          images.add(banner.getImage());
-          titles.add(banner.getTitle());
+        @Override
+        protected void onHandleSuccess(ExproleBanner exproleBanner) {
+          ExproleBanner.ViewBean<CmsView> view = exproleBanner.getView();
+          List<CmsView> bannerList = view.getRows();
+          for (int i = 0; i < bannerList.size(); i++) {
+            CmsView banner = bannerList.get(i);
+            images.add(banner.getImage());
+            titles.add(banner.getTitle());
+          }
+          banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+          banner.setImages(images);
+          banner.setBannerTitles(titles);
+          banner.setImageLoader(new GlideImageLoader()).start();
         }
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
-        banner.setImages(images);
-        banner.setBannerTitles(titles);
-        banner.setImageLoader(new GlideImageLoader()).start();
-      }
-    });
+      });
   }
 
   private void getExplorePosts(String cityId) {
@@ -183,19 +200,29 @@ public class ExploresChoiceFragment extends BaseFragment {
       .getExplorePostsRetorfitService().getExplorePosts("-createdAt", 10, 0, cityId, true);
     observable.compose(compose(this.<BaseEntityObject<ExprolePosts>>bindToLifecycle())).subscribe
       (new BaseObserverObject<ExprolePosts>(getContext()) {
-      @Override
-      protected void onHandleSuccess(ExprolePosts exprolePosts) {
-        List<SearchPost> list = exprolePosts.getHits();
-        try {
-          if (list != null) {
-            ExploresPostViewItemAdapter exploresPostViewItemAdapter = new
-              ExploresPostViewItemAdapter(getContext(), R.layout.activity_banner_post, list);
-            listView.setAdapter(exploresPostViewItemAdapter);
+        @Override
+        protected void onHandleSuccess(ExprolePosts exprolePosts) {
+          try {
+            List<SearchPost> list = exprolePosts.getHits();
+            if (list != null) {
+              ExploresPostViewItemAdapter exploresPostViewItemAdapter = new
+                ExploresPostViewItemAdapter(getContext(), R.layout.activity_banner_post, list);
+              listView.setAdapter(exploresPostViewItemAdapter);
+            }
+          } catch (NullPointerException e) {
+            LogUtil.error(e.getMessage());
           }
-        } catch (NullPointerException e) {
-          LogUtil.error(e.getMessage());
         }
-      }
-    });
+
+        @Override
+        public void onError(Throwable e) {
+          super.onError(e);
+        }
+
+        @Override
+        protected void onHandleError(String msg) {
+          super.onHandleError(msg);
+        }
+      });
   }
 }

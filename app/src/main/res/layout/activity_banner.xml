@@ -47,14 +47,18 @@
         android:text="@string/ion_location"
         android:textAlignment="center"
         android:textColor="@color/colorMoreLightGray"
-        android:textSize="@dimen/x24" />
+        android:textSize="@dimen/x22" />
 
       <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_centerInParent="true"
         android:layout_height="@dimen/y36">
 
         <android.support.design.widget.TabLayout
           android:id="@+id/explores_tab"
+          app:tabGravity="center"
+          app:tabIndicatorColor="@color/colorWhite"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"></android.support.design.widget.TabLayout>
 

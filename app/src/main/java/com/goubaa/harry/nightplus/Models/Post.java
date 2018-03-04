@@ -315,12 +315,22 @@ public class Post implements Serializable {
   public static class MessageBean implements Serializable {
     private List<?> images;
 
+    private String description;
+
     public List<?> getImages() {
       return images;
     }
 
     public void setImages(List<?> images) {
       this.images = images;
+    }
+
+    public String getDescription() {
+      return description;
+    }
+
+    public void setDescription(String description) {
+      this.description = description;
     }
   }
 

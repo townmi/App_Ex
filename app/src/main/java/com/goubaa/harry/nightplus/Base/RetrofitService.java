@@ -18,18 +18,32 @@ public interface RetrofitService {
   Observable<BaseEntity<City>> getCities();
 
   @GET("community/post/{id}")
-  Observable<BaseEntity<Post>> getPosts(@Path("id") String id);
+  Observable<BaseEntity<Post>> getPostInfo(@Path("id") String id);
 
   @GET("internal/userInfo?_type=User")
   Observable<BaseEntityObject<User>> getUserInfo();
 
   @GET("public/graphql")
-  Observable<BaseEntityObject<ExproleBanner>> getBanners(@Query("query") String query);
-
+  Observable<BaseEntityObject<ExproleBanner>> getBanners(
+    @Query("query") String query
+  );
 
   @GET("posts")
-  Observable<BaseEntityObject<ExprolePosts>> getExplorePosts(@Query("sort") String sort, @Query
-    ("limit")
-    int limit, @Query("offset") int offset, @Query("cityId") String cityId, @Query("isRecommend")
-    boolean isRecommend);
+  Observable<BaseEntityObject<ExprolePosts>> getExplorePosts(
+    @Query("sort") String sort,
+    @Query("limit") int limit,
+    @Query("offset") int offset,
+    @Query("cityId") String cityId,
+    @Query("isRecommend") boolean isRecommend
+  );
+
+  @GET("community/posts")
+  Observable<BaseEntity<Post>> getPosts(
+    @Query("sort") String sort,
+    @Query("limit") int limit,
+    @Query("offset") int offset,
+    @Query("postTypeList") String postTypeList,
+    @Query("userId") String userId,
+    @Query("isFollow") boolean isFollow
+  );
 }

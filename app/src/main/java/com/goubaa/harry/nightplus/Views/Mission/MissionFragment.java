@@ -165,9 +165,8 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
   private void getPost(String id) {
 
     Observable<BaseEntity<Post>> observable = RetrofitFactory.getCommunityCoreRetrofitService()
-      .getPosts(id);
-    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe(new
-                                                                                      BaseObserver<Post>(getContext()) {
+      .getPostInfo(id);
+    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe(new BaseObserver<Post>(getContext()) {
       @Override
       protected void onHandleSuccess(ArrayList<Post> arrayList) {
         Post post;

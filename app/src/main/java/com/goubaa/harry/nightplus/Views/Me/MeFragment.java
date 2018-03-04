@@ -147,8 +147,7 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
   private void getStudents(String id, String name) {
 
     Observable<BaseEntity<City>> observable = RetrofitFactory.getInstance().getCities();
-    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new
-                                                                                      BaseObserver<City>(getContext()) {
+    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new BaseObserver<City>(getContext()) {
       @Override
       protected void onHandleSuccess(ArrayList<City> arrayList) {
         City city;

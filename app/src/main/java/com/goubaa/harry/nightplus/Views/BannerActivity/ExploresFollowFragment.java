@@ -1,15 +1,30 @@
 package com.goubaa.harry.nightplus.Views.BannerActivity;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseFragment;
+import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.Base.BaseObserver;
+import com.goubaa.harry.nightplus.Library.LogUtil;
+import com.goubaa.harry.nightplus.Models.Post;
 import com.goubaa.harry.nightplus.R;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.internal.observers.BlockingBaseObserver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +34,7 @@ import com.goubaa.harry.nightplus.R;
  * Use the {@link ExploresFollowFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExploresFollowFragment extends BaseFragment {
+public class ExploresFollowFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -28,6 +43,9 @@ public class ExploresFollowFragment extends BaseFragment {
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
+
+  @BindView(R.id.explores_follow_list)
+  ListView listView;
 
   private OnFragmentInteractionListener mListener;
 
@@ -67,7 +85,16 @@ public class ExploresFollowFragment extends BaseFragment {
     savedInstanceState) {
 
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_explores_follow, container, false);
+    View view = inflater.inflate(R.layout.fragment_explores_follow, container, false);
+    ButterKnife.bind(this, view);
+
+    Resources resources = getResources();
+    int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+    int statusBarHeight = resources.getDimensionPixelSize(resourceId);
+    int height = statusBarHeight + resources.getDimensionPixelSize(R.dimen.x36);
+    listView.setPadding(0, height, 0, 0);
+    getPosts();
+    return view;
   }
 
   // TODO: Rename method, update argument and hook method into UI event
@@ -117,5 +144,51 @@ public class ExploresFollowFragment extends BaseFragment {
   @Override
   protected String setFragmentName() {
     return null;
+  }
+
+
+  @Override
+  public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+  }
+
+  @Override
+  public void onPageScrollStateChanged(int state) {
+
+  }
+
+  @Override
+  public void onPageSelected(int position) {
+
+  }
+
+  private void getPosts() {
+    Observable<BaseEntity<Post>> observable = RetrofitFactory
+      .getCommunityCoreRetrofitService().getPosts("-createdAt", 10, 0, "[0,1]", "3e0576d0-1d1e-11e8-a634-e34f2986bcd5", false);
+
+    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe
+      (new BaseObserver<Post>(getContext()) {
+        @Override
+        protected void onHandleSuccess(ArrayList<Post> arrayList) {
+          try {
+
+            ExploresFollowPostViewItemAdapter exploresFollowPostViewItemAdapter = new
+              ExploresFollowPostViewItemAdapter(getContext(), R.layout.activity_banner_follow_post_info, arrayList);
+            listView.setAdapter(exploresFollowPostViewItemAdapter);
+          } catch (Exception e) {
+            LogUtil.error(e.getMessage());
+          }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+          super.onError(e);
+        }
+
+        @Override
+        protected void onHandleError(String msg) {
+          super.onHandleError(msg);
+        }
+      });
   }
 }

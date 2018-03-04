@@ -4,10 +4,17 @@
   android:layout_height="match_parent"
   tools:context="com.goubaa.harry.nightplus.Views.BannerActivity.ExploresFollowFragment">
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
+  <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="@string/hello_blank_fragment" />
+    android:background="@color/colorBlack"
+    android:scrollbars="none">
+
+    <com.goubaa.harry.nightplus.CustomViews.CustomListView
+      android:id="@+id/explores_follow_list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"></com.goubaa.harry.nightplus.CustomViews.CustomListView>
+  </ScrollView>
+
 
 </FrameLayout>
