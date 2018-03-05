@@ -28,4 +28,6 @@
   <string name="ion_date">&#xf171;</string>
   <string name="ion_member">&#xf173;</string>
   <string name="ion_location">&#xf1ff;</string>
+  <string name="ion_triangle">&#xf163;</string>
+  <string name="ion_arrow_down">&#xf174;</string>
 </resources>

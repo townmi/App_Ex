@@ -10,12 +10,14 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,6 +40,7 @@ import java.util.List;
 
 public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
   private List<Post> lists;
+  private Typeface typeface;
   private int resourceId;
   private Context context;
   private int radius;
@@ -45,7 +48,8 @@ public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
   private int postPictureWidth;
   private int getPostPictureMargin;
 
-  public ExploresFollowPostViewItemAdapter(@NonNull Context context, int resource, @NonNull List objects) {
+  public ExploresFollowPostViewItemAdapter(@NonNull Context context, int resource, @NonNull List
+    objects) {
     super(context, resource, objects);
 
     this.context = context;
@@ -55,6 +59,8 @@ public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
     this.postPictureWidth = context.getResources().getDimensionPixelSize(R.dimen.x84);
     this.getPostPictureMargin = context.getResources().getDimensionPixelSize(R.dimen.x9);
     this.lists = objects;
+
+    this.typeface = Typeface.createFromAsset(context.getResources().getAssets(), "ionicons.ttf");
   }
 
   @Override
@@ -78,12 +84,17 @@ public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
   @Override
   public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
     View view = LayoutInflater.from(context).inflate(resourceId, null);
-    ImageButton authorPicture = (ImageButton) view.findViewById(R.id.explores_list_follow_post_author_picture);
+    ImageButton authorPicture = (ImageButton) view.findViewById(R.id
+      .explores_list_follow_post_author_picture);
     TextView authorName = (TextView) view.findViewById(R.id.explores_list_follow_post_author_name);
     TextView authorPostDate = (TextView) view.findViewById(R.id.explores_list_follow_post_date);
-    TextView postDescription = (TextView) view.findViewById(R.id.explores_list_follow_post_description);
-    LinearLayout postPictures = (LinearLayout) view.findViewById(R.id.explores_list_follow_post_pictures);
+    TextView postDescription = (TextView) view.findViewById(R.id
+      .explores_list_follow_post_description);
+    LinearLayout postPictures = (LinearLayout) view.findViewById(R.id
+      .explores_list_follow_post_pictures);
+    TextView followBtn = (TextView) view.findViewById(R.id.explores_list_follow_post_author_follow);
 
+    followBtn.setTypeface(typeface);
 
     Post post = lists.get(position);
     Post.PostedByBean postedBy = post.getPostedBy();
@@ -114,7 +125,8 @@ public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
         // 如果图片只有一张，就自适应加载
         ImageView _view = new ImageView(context);
         _view.setAdjustViewBounds(true);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout
+          .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         _view.setLayoutParams(layoutParams);
         CustomPicasso.with(context).load(_postPictures.get(0)).tag("radius").into(_view);
         postPictures.addView(_view);
@@ -123,13 +135,15 @@ public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
         for (int i = 0; i < _postPictures.size(); i++) {
           ImageView _view = new ImageView(context);
           int _i = i % 3;
-          LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this.postPictureWidth, this.postPictureWidth);
+          LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this
+            .postPictureWidth, this.postPictureWidth);
           if (_i == 1) {
             LogUtil.debug("" + this.getPostPictureMargin);
             layoutParams.setMargins(this.getPostPictureMargin, 0, this.getPostPictureMargin, 0);
           }
           _view.setLayoutParams(layoutParams);
-          CustomPicasso.with(context).load(_postPictures.get(i)).tag("radius").fit().centerCrop().into(_view);
+          CustomPicasso.with(context).load(_postPictures.get(i)).tag("radius").fit().centerCrop()
+            .into(_view);
           postPictures.addView(_view);
         }
       }
@@ -160,8 +174,8 @@ public class ExploresFollowPostViewItemAdapter extends ArrayAdapter {
     authorName.setText(_authorName);
     authorPostDate.setText(_authorPostDate);
     CustomPicasso.with(context).load(_authorPicture).tag("radius").resize(authorPictureWidth,
-      authorPictureWidth).centerCrop().transform(new ExploresFollowPostViewItemAdapter.RadiusTransformation(context)).into
-      (authorPicture);
+      authorPictureWidth).centerCrop().transform(new ExploresFollowPostViewItemAdapter
+      .RadiusTransformation(context)).into(authorPicture);
 
     return view;
   }

@@ -52,17 +52,15 @@
         android:textColor="@color/colorLightGray"
         android:textSize="14sp" />
 
-      <Button
+      <TextView
         android:id="@+id/explores_list_follow_post_author_follow"
-        style="@style/follow_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
         android:lineSpacingMultiplier="1.43"
-        android:stateListAnimator="@null"
-        android:text="关注"
+        android:text="@string/ion_arrow_down"
         android:textColor="@color/colorLightGray"
         android:textSize="14sp" />
     </RelativeLayout>
