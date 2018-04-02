@@ -48,12 +48,11 @@ public class ExploresPostViewItemAdapter extends ArrayAdapter<SearchPost> {
   private int radius;
   private int authorPictureWidth;
 
-  public ExploresPostViewItemAdapter(@NonNull Context context, int resource, @NonNull
-    List<SearchPost> lists) {
+  public ExploresPostViewItemAdapter(@NonNull Context context, int resource, @NonNull List<SearchPost> lists) {
     super(context, resource, lists);
     this.context = context;
     this.resourceId = resource;
-    this.radius = context.getResources().getDimensionPixelSize(R.dimen.x5);
+    this.radius = context.getResources().getDimensionPixelSize(R.dimen.x7);
     this.authorPictureWidth = context.getResources().getDimensionPixelSize(R.dimen.x48);
     this.lists = lists;
   }
@@ -102,12 +101,10 @@ public class ExploresPostViewItemAdapter extends ArrayAdapter<SearchPost> {
         if (name.equals("component-banner")) {
           if (defaultComponentsBeans.get(i).getContent() != null) {
             if (_index.equals("cmspost")) {
-              ArrayList<LinkedTreeMap<String, String>> l = (ArrayList<LinkedTreeMap<String,
-                String>>) defaultComponentsBeans.get(i).getContent();
+              ArrayList<LinkedTreeMap<String, String>> l = (ArrayList<LinkedTreeMap<String, String>>) defaultComponentsBeans.get(i).getContent();
               pictureUrl = l.get(0).get("imgUrl");
             } else if (_index.equals("communitypost")) {
-              LinkedTreeMap<String, ArrayList<String>> l = (LinkedTreeMap<String,
-                ArrayList<String>>) defaultComponentsBeans.get(i).getContent();
+              LinkedTreeMap<String, ArrayList<String>> l = (LinkedTreeMap<String, ArrayList<String>>) defaultComponentsBeans.get(i).getContent();
               if (l.get("banner") != null && l.get("banner").get(0) != null) {
                 pictureUrl = l.get("banner").get(0);
               }
@@ -136,17 +133,14 @@ public class ExploresPostViewItemAdapter extends ArrayAdapter<SearchPost> {
     ImageView picture = (ImageView) view.findViewById(R.id.explores_list_post_picture);
     ImageView authorPicture = (ImageView) view.findViewById(R.id.explores_list_post_author_picture);
     TextView authorName = (TextView) view.findViewById(R.id.explores_list_post_author_name);
-    TextView authorDescription = (TextView) view.findViewById(R.id
-      .explores_list_post_author_description);
+    TextView authorDescription = (TextView) view.findViewById(R.id.explores_list_post_author_description);
     TextView authorDescribe = (TextView) view.findViewById(R.id.explores_list_post_author_describe);
     TagContainerLayout tags = (TagContainerLayout) view.findViewById(R.id.explores_list_post_tag);
     Button followBtn = (Button) view.findViewById(R.id.explores_list_post_author_follow);
 
-    CustomPicasso.with(context).load(pictureUrl).tag("smallRadius").transform(new
-      SmallRadiusTransformation(context, radius)).into(picture);
-    CustomPicasso.with(context).load(_authorPicture).tag("radius").resize(authorPictureWidth,
-      authorPictureWidth).centerCrop().transform(new RadiusTransformation(context)).into
-      (authorPicture);
+    CustomPicasso.with(context).load(pictureUrl).tag("smallRadius").fit().centerCrop().transform(new SmallRadiusTransformation(context, radius)).into(picture);
+    CustomPicasso.with(context).load(_authorPicture).error(R.drawable.a1i).tag("radius").resize(authorPictureWidth, authorPictureWidth).centerCrop().transform(new RadiusTransformation(context))
+      .into(authorPicture);
 
     title.setText(post.getTitle());
     authorName.setText(_authorName);
@@ -205,8 +199,7 @@ public class ExploresPostViewItemAdapter extends ArrayAdapter<SearchPost> {
       canvas.drawRoundRect(rectF, radius, radius, paint);//画圆角矩形
 
       canvas.drawRect(0, rectF.bottom - radius, radius, rectF.bottom, paint);
-      canvas.drawRect(rectF.right - radius, rectF.bottom - radius, rectF.right, rectF.bottom,
-        paint);
+      canvas.drawRect(rectF.right - radius, rectF.bottom - radius, rectF.right, rectF.bottom, paint);
 
       paint.setFilterBitmap(true);
       paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));

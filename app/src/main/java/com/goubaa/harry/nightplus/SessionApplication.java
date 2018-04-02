@@ -6,16 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.BatteryManager;
-import android.os.Build;
 import android.widget.Toast;
 
+import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseEntityObject;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
 import com.goubaa.harry.nightplus.Library.LogUtil;
 import com.goubaa.harry.nightplus.Library.Utils;
+import com.goubaa.harry.nightplus.Models.City;
 import com.goubaa.harry.nightplus.Models.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class SessionApplication extends Application {
   public static Boolean canWriteStorage;
   public static String token = null;
   public static User user = null;
+  public static ArrayList<City> cities = null;
 
   // 动态广播接收器
   private static BatteryReceiver batteryReceiver;
@@ -52,9 +54,13 @@ public class SessionApplication extends Application {
      */
     sharedPreferences = mContext.getSharedPreferences("NIGHT_PLUS", mContext.MODE_PRIVATE);
     token = sharedPreferences.getString("TOKEN", null);
+
+    getCityList();
+
     if (token != null && token.length() > 0) {
       getUserInfo();
     }
+
     Utils.getBuildInfo(buildInformation);
     Utils.getPhoneIMEI(mContext, buildInformation);
     Utils.getMacAddress(mContext, buildInformation);
@@ -84,12 +90,15 @@ public class SessionApplication extends Application {
     SessionApplication.user = user;
   }
 
+  public static ArrayList<City> getCities() {
+    return cities;
+  }
+
   /**
    * 使用token 缓存登录用户信息
    */
   public void getUserInfo() {
-    Observable<BaseEntityObject<User>> observable = RetrofitFactory.getUserRetrofitService()
-      .getUserInfo();
+    Observable<BaseEntityObject<User>> observable = RetrofitFactory.getUserRetrofitService().getUserInfo();
     observable.subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Disposable>() {
       @Override
       public void accept(Disposable disposable) throws Exception {
@@ -117,6 +126,38 @@ public class SessionApplication extends Application {
       @Override
       public void onComplete() {
         LogUtil.info("getUserInfo complete");
+      }
+    });
+  }
+
+  public void getCityList() {
+    Observable<BaseEntity<City>> observable = RetrofitFactory.getVenuesCoreRetrofitService().getCities();
+    observable.subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Disposable>() {
+      @Override
+      public void accept(Disposable disposable) throws Exception {
+        if (!Utils.isNetworkAvailable(mContext)) {
+          LogUtil.debug("NetWork Disabled");
+          Toast.makeText(mContext, "error", Toast.LENGTH_SHORT).show();
+        }
+      }
+    }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<BaseEntity<City>>() {
+      @Override
+      public void onSubscribe(Disposable d) {
+      }
+
+      @Override
+      public void onNext(BaseEntity<City> cityBaseEntity) {
+        ArrayList<City> cities = cityBaseEntity.getData();
+        LogUtil.info("" + cities.size());
+      }
+
+      @Override
+      public void onError(Throwable e) {
+      }
+
+      @Override
+      public void onComplete() {
+        LogUtil.info("getCityLis complete");
       }
     });
   }

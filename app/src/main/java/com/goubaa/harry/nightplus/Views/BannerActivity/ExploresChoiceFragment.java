@@ -1,14 +1,18 @@
 package com.goubaa.harry.nightplus.Views.BannerActivity;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.goubaa.harry.banner.Banner;
 import com.goubaa.harry.banner.BannerConfig;
@@ -16,7 +20,10 @@ import com.goubaa.harry.nightplus.Base.BaseEntityObject;
 import com.goubaa.harry.nightplus.Base.BaseFragment;
 import com.goubaa.harry.nightplus.Base.BaseObserverObject;
 import com.goubaa.harry.nightplus.Base.RetrofitFactory;
+import com.goubaa.harry.nightplus.CustomViews.BlurScrollView.NotifyingScrollView;
+import com.goubaa.harry.nightplus.CustomViews.BlurScrollView.app.GlassActionBarHelper;
 import com.goubaa.harry.nightplus.Library.LogUtil;
+import com.goubaa.harry.nightplus.Library.Utils;
 import com.goubaa.harry.nightplus.Models.CmsView;
 import com.goubaa.harry.nightplus.Models.ExproleBanner;
 import com.goubaa.harry.nightplus.Models.ExprolePosts;
@@ -25,6 +32,7 @@ import com.goubaa.harry.nightplus.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +57,10 @@ public class ExploresChoiceFragment extends BaseFragment implements ViewPager.On
   private String mParam2;
   private List<String> images = new ArrayList<>();
   private List<String> titles = new ArrayList<>();
+  private int height;
+
+  @BindView(R.id.explores_follow_body)
+  ScrollView body;
 
   @BindView(R.id.explores_banner)
   Banner banner;
@@ -57,6 +69,8 @@ public class ExploresChoiceFragment extends BaseFragment implements ViewPager.On
   ListView listView;
 
   private OnFragmentInteractionListener mListener;
+  private GlassActionBarHelper blurHelper;
+  private static int width;
 
   public ExploresChoiceFragment() {
     // Required empty public constructor
@@ -90,29 +104,40 @@ public class ExploresChoiceFragment extends BaseFragment implements ViewPager.On
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-    savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_explores_choice, container, false);
+//    Resources resources = getResources();
+//    int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+//    int statusBarHeight = resources.getDimensionPixelSize(resourceId);
+//
+//    height = statusBarHeight + resources.getDimensionPixelSize(R.dimen.x36);
+//    width = resources.getDimensionPixelSize(R.dimen.x320);
+//    int screenHeight = resources.getDimensionPixelSize(R.dimen.y160);
+
+//    blurHelper = new GlassActionBarHelper().contentLayout(R.layout.fragment_explores_choice, height);
+//    View view = blurHelper.createView(getContext());
+
     ButterKnife.bind(this, view);
+
+//    body.setOnScrollChangedListener(new NotifyingScrollView.OnScrollChangedListener() {
+//      @Override
+//      public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
+//        if (t > banner.getHeight() && t % screenHeight == 1) {
+//          blurHelper.invalidate();
+//        }
+//      }
+//    });
+
     /**
      * fetch banners
      */
-    String query = "{view(isDisplayed:true,sectionType:\"community-banner\"," +
-      "cityIds:[\"58d1ecade841a18ba5399026\"]){count," + "rows{_id,title,viewType,url,image, " +
-      "articleId, subTitle," + "topic{id,topicName}}}}";
+    String query = "{view(isDisplayed:true,sectionType:\"community-banner\"," + "cityIds:[\"58d1ecade841a18ba5399026\"]){count," + "rows{_id,title,viewType,url,image, " + "articleId, " + "subTitle," +
+      "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "topic{id," + "topicName}}}}";
     getBanners(query);
     getExplorePosts("58d1ecade841a18ba5399026");
     return view;
 
-  }
-
-  // TODO: Rename method, update argument and hook method into UI event
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
-    }
   }
 
   @Override
@@ -121,14 +146,24 @@ public class ExploresChoiceFragment extends BaseFragment implements ViewPager.On
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString() + " must implement " +
-        "OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " + "OnFragmentInteractionListener");
     }
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
   }
 
   @Override
   public void onDetach() {
     super.onDetach();
+//    blurHelper.setStop(true);
     mListener = null;
   }
 
@@ -150,7 +185,6 @@ public class ExploresChoiceFragment extends BaseFragment implements ViewPager.On
 
   @Override
   public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
   }
 
   @Override
@@ -174,55 +208,71 @@ public class ExploresChoiceFragment extends BaseFragment implements ViewPager.On
   }
 
   private void getBanners(String query) {
-    Observable<BaseEntityObject<ExproleBanner>> observable = RetrofitFactory
-      .getCmsRetorfitService().getBanners(query);
-    observable.compose(compose(this.<BaseEntityObject<ExproleBanner>>bindToLifecycle()))
-      .subscribe(new BaseObserverObject<ExproleBanner>(getContext()) {
-        @Override
-        protected void onHandleSuccess(ExproleBanner exproleBanner) {
-          ExproleBanner.ViewBean<CmsView> view = exproleBanner.getView();
-          List<CmsView> bannerList = view.getRows();
-          for (int i = 0; i < bannerList.size(); i++) {
-            CmsView banner = bannerList.get(i);
-            images.add(banner.getImage());
-            titles.add(banner.getTitle());
-          }
-          banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
-          banner.setImages(images);
-          banner.setBannerTitles(titles);
-          banner.setImageLoader(new GlideImageLoader()).start();
+    Observable<BaseEntityObject<ExproleBanner>> observable = RetrofitFactory.getCmsRetorfitService().getBanners(query);
+    observable.compose(compose(this.<BaseEntityObject<ExproleBanner>>bindToLifecycle())).subscribe(new BaseObserverObject<ExproleBanner>(getContext()) {
+      @Override
+      protected void onHandleSuccess(ExproleBanner exproleBanner) {
+        ExproleBanner.ViewBean<CmsView> view = exproleBanner.getView();
+        List<CmsView> bannerList = view.getRows();
+        for (int i = 0; i < bannerList.size(); i++) {
+          CmsView banner = bannerList.get(i);
+          images.add(banner.getImage());
+          titles.add(banner.getTitle());
         }
-      });
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setImages(images);
+        banner.setBannerTitles(titles);
+        banner.setImageLoader(new GlideImageLoader()).start();
+//        blurHelper.invalidate();
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+          @Override
+          public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//            if (positionOffsetPixels % 2 == 1) {
+//              blurHelper.invalidate();
+//            }
+          }
+
+          @Override
+          public void onPageSelected(int position) {
+          }
+
+          @Override
+          public void onPageScrollStateChanged(int state) {
+
+          }
+        });
+
+      }
+    });
   }
 
   private void getExplorePosts(String cityId) {
-    Observable<BaseEntityObject<ExprolePosts>> observable = RetrofitFactory
-      .getExplorePostsRetorfitService().getExplorePosts("-createdAt", 10, 0, cityId, true);
-    observable.compose(compose(this.<BaseEntityObject<ExprolePosts>>bindToLifecycle())).subscribe
-      (new BaseObserverObject<ExprolePosts>(getContext()) {
-        @Override
-        protected void onHandleSuccess(ExprolePosts exprolePosts) {
-          try {
-            List<SearchPost> list = exprolePosts.getHits();
-            if (list != null) {
-              ExploresPostViewItemAdapter exploresPostViewItemAdapter = new
-                ExploresPostViewItemAdapter(getContext(), R.layout.activity_banner_post, list);
-              listView.setAdapter(exploresPostViewItemAdapter);
-            }
-          } catch (NullPointerException e) {
-            LogUtil.error(e.getMessage());
+    Observable<BaseEntityObject<ExprolePosts>> observable = RetrofitFactory.getExplorePostsRetorfitService().getExplorePosts("-createdAt", 10, 0, cityId, true);
+    observable.compose(compose(this.<BaseEntityObject<ExprolePosts>>bindToLifecycle())).subscribe(new BaseObserverObject<ExprolePosts>(getContext()) {
+      @Override
+      protected void onHandleSuccess(ExprolePosts exprolePosts) {
+        try {
+          List<SearchPost> list = exprolePosts.getHits();
+          if (list != null) {
+            ExploresPostViewItemAdapter exploresPostViewItemAdapter = new ExploresPostViewItemAdapter(getContext(), R.layout.activity_banner_post, list);
+            listView.setAdapter(exploresPostViewItemAdapter);
+            Utils.setListViewHeightBasedOnChildren(listView);
           }
+        } catch (NullPointerException e) {
+          LogUtil.error(e.getMessage());
         }
+      }
 
-        @Override
-        public void onError(Throwable e) {
-          super.onError(e);
-        }
+      @Override
+      public void onError(Throwable e) {
+        super.onError(e);
+      }
 
-        @Override
-        protected void onHandleError(String msg) {
-          super.onHandleError(msg);
-        }
-      });
+      @Override
+      protected void onHandleError(String msg) {
+        super.onHandleError(msg);
+      }
+    });
   }
+
 }

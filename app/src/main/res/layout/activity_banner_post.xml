@@ -5,8 +5,8 @@
   android:layout_height="match_parent"
   android:orientation="vertical"
   android:paddingBottom="@dimen/y8"
-  android:paddingLeft="@dimen/x8"
-  android:paddingRight="@dimen/x8">
+  android:paddingLeft="@dimen/x10"
+  android:paddingRight="@dimen/x10">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -21,9 +21,14 @@
 
       <ImageView
         android:id="@+id/explores_list_post_picture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/x300"
+        android:layout_height="@dimen/x300"
         android:adjustViewBounds="true" />
+      <!--<ImageView-->
+      <!--android:id="@+id/explores_list_post_picture"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:adjustViewBounds="true" />-->
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +63,9 @@
           android:id="@+id/explores_list_post_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:lineSpacingMultiplier="1.375"
+          android:ellipsize="end"
+          android:lineSpacingMultiplier="1.05"
+          android:maxLines="2"
           android:shadowColor="#ff000000"
           android:shadowDx="2"
           android:shadowDy="4"
@@ -86,8 +93,8 @@
         <ImageButton
           android:id="@+id/explores_list_post_author_picture"
           android:layout_width="@dimen/x48"
-          android:background="@android:color/transparent"
-          android:layout_height="@dimen/x48" />
+          android:layout_height="@dimen/x48"
+          android:background="@android:color/transparent" />
 
         <TextView
           android:id="@+id/explores_list_post_author_name"

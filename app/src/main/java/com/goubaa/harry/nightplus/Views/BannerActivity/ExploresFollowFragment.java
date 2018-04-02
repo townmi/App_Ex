@@ -81,8 +81,7 @@ public class ExploresFollowFragment extends BaseFragment implements ViewPager.On
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-    savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_explores_follow, container, false);
@@ -110,8 +109,7 @@ public class ExploresFollowFragment extends BaseFragment implements ViewPager.On
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
     } else {
-      throw new RuntimeException(context.toString() + " must implement " +
-        "OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " + "OnFragmentInteractionListener");
     }
   }
 
@@ -163,32 +161,29 @@ public class ExploresFollowFragment extends BaseFragment implements ViewPager.On
   }
 
   private void getPosts() {
-    Observable<BaseEntity<Post>> observable = RetrofitFactory
-      .getCommunityCoreRetrofitService().getPosts("-createdAt", 10, 0, "[0,1]", "3e0576d0-1d1e-11e8-a634-e34f2986bcd5", false);
+    Observable<BaseEntity<Post>> observable = RetrofitFactory.getCommunityCoreRetrofitService().getPosts("-createdAt", 10, 0, "[0,1]", true, "", false);
 
-    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe
-      (new BaseObserver<Post>(getContext()) {
-        @Override
-        protected void onHandleSuccess(ArrayList<Post> arrayList) {
-          try {
+    observable.compose(compose(this.<BaseEntity<Post>>bindToLifecycle())).subscribe(new BaseObserver<Post>(getContext()) {
+      @Override
+      protected void onHandleSuccess(ArrayList<Post> arrayList) {
+        try {
 
-            ExploresFollowPostViewItemAdapter exploresFollowPostViewItemAdapter = new
-              ExploresFollowPostViewItemAdapter(getContext(), R.layout.activity_banner_follow_post_info, arrayList);
-            listView.setAdapter(exploresFollowPostViewItemAdapter);
-          } catch (Exception e) {
-            LogUtil.error(e.getMessage());
-          }
+          ExploresFollowPostViewItemAdapter exploresFollowPostViewItemAdapter = new ExploresFollowPostViewItemAdapter(getContext(), R.layout.activity_banner_follow_post_info, arrayList);
+          listView.setAdapter(exploresFollowPostViewItemAdapter);
+        } catch (Exception e) {
+          LogUtil.error(e.getMessage());
         }
+      }
 
-        @Override
-        public void onError(Throwable e) {
-          super.onError(e);
-        }
+      @Override
+      public void onError(Throwable e) {
+        super.onError(e);
+      }
 
-        @Override
-        protected void onHandleError(String msg) {
-          super.onHandleError(msg);
-        }
-      });
+      @Override
+      protected void onHandleError(String msg) {
+        super.onHandleError(msg);
+      }
+    });
   }
 }

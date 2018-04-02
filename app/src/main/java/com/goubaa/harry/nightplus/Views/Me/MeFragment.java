@@ -73,8 +73,7 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-    savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     return inflater.inflate(R.layout.fragment_me, container, false);
   }
@@ -91,10 +90,8 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     super.onAttach(context);
     if (context instanceof OnFragmentInteractionListener) {
       mListener = (OnFragmentInteractionListener) context;
-      getStudents("", "");
     } else {
-      throw new RuntimeException(context.toString() + " must implement " +
-        "OnFragmentInteractionListener");
+      throw new RuntimeException(context.toString() + " must implement " + "OnFragmentInteractionListener");
     }
   }
 
@@ -144,37 +141,4 @@ public class MeFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     return "动态";
   }
 
-  private void getStudents(String id, String name) {
-
-    Observable<BaseEntity<City>> observable = RetrofitFactory.getInstance().getCities();
-    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new BaseObserver<City>(getContext()) {
-      @Override
-      protected void onHandleSuccess(ArrayList<City> arrayList) {
-        City city;
-        String _id = "";
-
-        try {
-          if (arrayList != null) {
-            city = arrayList.get(0);
-            _id = city.get_id();
-            LogUtil.info(_id);
-          }
-        } catch (NullPointerException e) {
-          LogUtil.error(e.getMessage());
-        }
-//        new AlertDialog.Builder(getContext()).setTitle("AJAX Success").setMessage("userId: " +
-//          _id).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//          @Override
-//          public void onClick(DialogInterface dialog, int which) {
-//
-//          }
-//        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//          @Override
-//          public void onClick(DialogInterface dialog, int which) {
-//
-//          }
-//        }).create().show();
-      }
-    });
-  }
 }

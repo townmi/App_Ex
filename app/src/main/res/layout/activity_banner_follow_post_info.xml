@@ -62,7 +62,7 @@
         android:lineSpacingMultiplier="1.43"
         android:text="@string/ion_arrow_down"
         android:textColor="@color/colorLightGray"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
     </RelativeLayout>
 
     <LinearLayout

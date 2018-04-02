@@ -11,15 +11,18 @@
     android:textColor="@color/colorWhite"
     android:textSize="16sp" />
 
-  <LinearLayout
+
+  <Button
+    android:layout_marginLeft="@dimen/x9"
+    style="@style/follow_btn"
+    android:id="@+id/explores_banner_tab_arrow"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/x2">
+    android:gravity="center_vertical"
+    android:text="@string/ion_triangle"
+    android:stateListAnimator="@null"
+    android:background="@android:color/transparent"
+    android:textColor="@color/colorWhite"
+    android:textSize="8sp" />
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="b"
-      android:textColor="@color/colorWhite" />
-  </LinearLayout>
 </LinearLayout>

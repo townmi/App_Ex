@@ -8,8 +8,10 @@
 
 package com.goubaa.harry.nightplus.Views.BannerActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -18,24 +20,33 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.goubaa.harry.nightplus.Base.BaseActivity;
 import com.goubaa.harry.nightplus.R;
-
+import com.goubaa.harry.nightplus.Views.Location.Location;
+import com.goubaa.harry.nightplus.Views.Login;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BannerActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
-  .OnClickListener, ExploresChoiceFragment.OnFragmentInteractionListener, ExploresFollowFragment.OnFragmentInteractionListener {
+  .OnClickListener, ExploresChoiceFragment.OnFragmentInteractionListener, ExploresFollowFragment
+  .OnFragmentInteractionListener {
 
   @BindView(R.id.explores_view_pager)
   ViewPager viewPager;
@@ -52,7 +63,14 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
   @BindView(R.id.explores_title_member)
   TextView member;
 
+  private PopupWindow popupWindow;
 
+  private Animation animationDown;
+  private Animation animationUp;
+  private TextView arrow;
+  private int position;
+  private int popupWindowOffsetY;
+  private int height;
   private Typeface typeface;
   private List<Fragment> fragmentList;
 
@@ -61,9 +79,11 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
     switch (view.getId()) {
       case R.id.main_tab_one:
         viewPager.setCurrentItem(0, false);
+        this.position = 0;
         break;
 
       case R.id.main_tab_two:
+        this.position = 1;
         viewPager.setCurrentItem(1, false);
         break;
     }
@@ -71,6 +91,7 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
 
   @Override
   public void onPageSelected(int position) {
+    this.position = position;
   }
 
   @Override
@@ -100,8 +121,7 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
     int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
     int statusBarHeight = resources.getDimensionPixelSize(resourceId);
 
-
-    int height = statusBarHeight + resources.getDimensionPixelSize(R.dimen.x36);
+    height = statusBarHeight + resources.getDimensionPixelSize(R.dimen.x36);
 
     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) buttons
       .getLayoutParams();
@@ -109,18 +129,26 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
     buttons.setLayoutParams(layoutParams);
     buttons.setPadding(0, statusBarHeight, 0, 0);
 
-
     typeface = Typeface.createFromAsset(resources.getAssets(), "ionicons.ttf");
     location.setTypeface(typeface);
     member.setTypeface(typeface);
 
+    location.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(BannerActivity.this, Location.class);
+        startActivity(intent);
+      }
+    });
 
-    ArrayList<String> titles = new ArrayList<>();
-    titles.add("");
-    titles.add("");
-
-//    tab.addTab(tab.newTab().setText("最新"));
-//    tab.addTab(tab.newTab().setText("最热"));
+    member.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(BannerActivity.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+      }
+    });
 
     fragmentList = new ArrayList<>();
     Fragment exploresChoiceFragment = ExploresChoiceFragment.newInstance("", "");
@@ -146,14 +174,47 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
         super.destroyItem(container, position, object);
       }
     });
-    viewPager.addOnPageChangeListener(this);
 
+    viewPager.addOnPageChangeListener(this);
     tab.setupWithViewPager(viewPager);
 
-    tab.getTabAt(0).setCustomView(getTabChoiceView(0));
-    tab.getTabAt(1).setCustomView(getTabFollowView(1));
+    tab.getTabAt(0).setCustomView(getTabChoiceView());
+    tab.getTabAt(1).setCustomView(getTabFollowView());
 
     viewPager.setCurrentItem(0, false);
+    this.position = 0;
+
+    popupWindowOffsetY = resources.getDimensionPixelSize(R.dimen.x36);
+    View contentView = LayoutInflater.from(BannerActivity.this).inflate(R.layout
+      .explore_banner_dorp_down, null);
+    LinearLayout box = (LinearLayout) contentView.findViewById(R.id.explores_banner_tab_item_box);
+//    box.setPadding(popupWindowOffsetY, 0, 0, 0);
+
+    popupWindow = new PopupWindow(BannerActivity.this);
+    popupWindow.setContentView(contentView);
+    popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+    popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+    popupWindow.setBackgroundDrawable(new ColorDrawable(0xffffff));
+    popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+//        if (popupWindow.isShowing()) {
+//          BannerActivity.this.arrow.startAnimation(animationUp);
+//          popupWindow.dismiss();
+//          return true;
+//        }
+        return false;
+      }
+    });
+
+    animationDown = AnimationUtils.loadAnimation(BannerActivity.this, R.anim
+      .animation_explore_tab_arrow_down);
+    animationUp = AnimationUtils.loadAnimation(BannerActivity.this, R.anim
+      .animation_explore_tab_arrow_up);
+    animationDown.setInterpolator(new LinearInterpolator());
+    animationUp.setInterpolator(new LinearInterpolator());
+    animationDown.setFillAfter(!animationDown.getFillAfter());
+    animationUp.setFillAfter(!animationUp.getFillAfter());
   }
 
   @Override
@@ -161,14 +222,64 @@ public class BannerActivity extends BaseActivity implements ViewPager.OnPageChan
 
   }
 
-  private View getTabChoiceView(final int position) {
-    View view = LayoutInflater.from(BannerActivity.this).inflate(R.layout.activity_banner_tab_item_choice, null);
+  private View getTabChoiceView() {
+    View view = LayoutInflater.from(BannerActivity.this).inflate(R.layout
+      .activity_banner_tab_item_choice, null);
+    this.arrow = (TextView) view.findViewById(R.id.explores_banner_tab_arrow);
+    this.arrow.setTypeface(typeface);
+    view.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (BannerActivity.this.position == 0) {
+          if (popupWindow != null && popupWindow.isShowing()) {
+            BannerActivity.this.arrow.startAnimation(animationUp);
+            popupWindow.dismiss();
+            return;
+          }
+          int y = (popupWindowOffsetY - view.getMeasuredHeight()) / 2;
+          BannerActivity.this.arrow.startAnimation(animationDown);
+//          popupWindow.showAsDropDown(v, 0, -1 * BannerActivity.this.popupWindowOffsetY);
+          popupWindow.showAsDropDown(v, 0, y);
+        } else {
+          viewPager.setCurrentItem(0, true);
+        }
+      }
+    });
     return view;
   }
 
-  private View getTabFollowView(final int position) {
-    View view = LayoutInflater.from(BannerActivity.this).inflate(R.layout.activity_banner_tab_item_follow, null);
+  private View getTabFollowView() {
+    View view = LayoutInflater.from(BannerActivity.this).inflate(R.layout
+      .activity_banner_tab_item_follow, null);
     return view;
+  }
+
+
+  private static class TabItem {
+
+    /**
+     * string : 玩乐
+     * key : event
+     */
+
+    private String string;
+    private String key;
+
+    public String getString() {
+      return string;
+    }
+
+    public void setString(String string) {
+      this.string = string;
+    }
+
+    public String getKey() {
+      return key;
+    }
+
+    public void setKey(String key) {
+      this.key = key;
+    }
   }
 }
 

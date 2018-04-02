@@ -43,6 +43,7 @@ public interface RetrofitService {
     @Query("limit") int limit,
     @Query("offset") int offset,
     @Query("postTypeList") String postTypeList,
+    @Query("cms") boolean cms,
     @Query("userId") String userId,
     @Query("isFollow") boolean isFollow
   );

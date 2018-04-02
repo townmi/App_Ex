@@ -48,10 +48,8 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View
-  .OnClickListener, ExploresFragment.OnFragmentInteractionListener, MissionFragment
-  .OnFragmentInteractionListener, VenueListFragment.OnFragmentInteractionListener, MeFragment
-  .OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ExploresFragment.OnFragmentInteractionListener, MissionFragment.OnFragmentInteractionListener,
+  VenueListFragment.OnFragmentInteractionListener, MeFragment.OnFragmentInteractionListener {
 
   private PopupWindow popupWindow;
 
@@ -69,8 +67,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     int y = getResources().getDimensionPixelSize(R.dimen.y30);
-    View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.main_drop_down,
-      null);
+    View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.main_drop_down, null);
     popupWindow = new PopupWindow(MainActivity.this);
     popupWindow.setContentView(contentView);
     popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -102,8 +99,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   private List<Fragment> fragmentList;
 
-  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable
-    .main_tab_incentives_active, R.drawable.main_tab_mission_active, R.drawable.main_tab_me_active};
+  private int[] activeList = {R.drawable.main_tab_explore_active, R.drawable.main_tab_incentives_active, R.drawable.main_tab_mission_active, R.drawable.main_tab_me_active};
 
   private FragmentPagerAdapter adapter;
 
@@ -137,11 +133,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   @Override
   public void onPageSelected(int position) {
-//        if (position == 2) {
-//            tabIndicators.get(position).setIconBitmap(this, R.mipmap.ic_launcher);
-//        } else {
-//            tabIndicators.get(2).setIconBitmap(this, R.mipmap.ic_launcher);
-//        }
+//    if (position == 2) {
+//        tabIndicators.get(position).setIconBitmap(this, R.mipmap.ic_launcher);
+//    } else {
+//        tabIndicators.get(2).setIconBitmap(this, R.mipmap.ic_launcher);
+//    }
   }
 
   @Override
@@ -314,9 +310,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
   void showAllowForWriteStorage(final PermissionRequest request) {
-    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog,
-                                                                                      button) ->
-      request.proceed()).setNegativeButton("cancel", (dialog, button) -> request.cancel()).show();
+    new AlertDialog.Builder(this).setMessage("quanxiang").setPositiveButton("allow", (dialog, button) -> request.proceed()).setNegativeButton("cancel", (dialog, button) -> request.cancel()).show();
   }
 
   @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -341,8 +335,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
   @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
   void showAllowForGPS(final PermissionRequest request) {
-    new AlertDialog.Builder(this).setMessage("GPS").setPositiveButton("allow", (dialog, button)
-      -> request.proceed()).setNegativeButton("cancel", (dialog, which) -> request.cancel()).show();
+    new AlertDialog.Builder(this).setMessage("GPS").setPositiveButton("allow", (dialog, button) -> request.proceed()).setNegativeButton("cancel", (dialog, which) -> request.cancel()).show();
   }
 
   @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -357,8 +350,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
 
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
-    int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
   }

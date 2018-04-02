@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="#c6000000"
+  android:paddingBottom="@dimen/y12"
+  android:paddingTop="@dimen/y12"
+  android:scrollbars="none">
+
+  <LinearLayout
+    android:id="@+id/explores_banner_tab_item_box"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/x8"
+    android:paddingRight="@dimen/x8">
+
+    <Button
+      style="@style/follow_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/x4"
+      android:layout_marginRight="@dimen/x4"
+      android:background="@drawable/explore_banner_tab_items_active"
+      android:text="@string/explore_items_all"
+      android:textColor="@color/colorWhite"
+      android:textSize="14sp" />
+
+    <Button
+      style="@style/follow_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/x4"
+      android:layout_marginRight="@dimen/x4"
+      android:background="@drawable/explore_banner_tab_items_normal"
+      android:text="@string/explore_items_music"
+      android:textColor="@color/colorWhite"
+      android:textSize="14sp" />
+
+    <Button
+      style="@style/follow_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/x4"
+      android:layout_marginRight="@dimen/x4"
+      android:background="@drawable/explore_banner_tab_items_normal"
+      android:text="@string/explore_items_drink"
+      android:textColor="@color/colorWhite"
+      android:textSize="14sp" />
+
+    <Button
+      style="@style/follow_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/x4"
+      android:layout_marginRight="@dimen/x4"
+      android:background="@drawable/explore_banner_tab_items_normal"
+      android:text="@string/explore_items_event"
+      android:textColor="@color/colorWhite"
+      android:textSize="14sp" />
+
+    <Button
+      style="@style/follow_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/x4"
+      android:layout_marginRight="@dimen/x4"
+      android:background="@drawable/explore_banner_tab_items_normal"
+      android:text="@string/explore_items_party"
+      android:textColor="@color/colorWhite"
+      android:textSize="14sp" />
+
+    <Button
+      style="@style/follow_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/x4"
+      android:layout_marginRight="@dimen/x4"
+      android:background="@drawable/explore_banner_tab_items_normal"
+      android:text="@string/explore_items_lifestyle"
+      android:textColor="@color/colorWhite"
+      android:textSize="14sp" />
+  </LinearLayout>
+</HorizontalScrollView>

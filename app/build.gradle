@@ -15,6 +15,10 @@ android {
 
   signingConfigs {
     debug {
+      keyAlias 'nightplus-debug.keystore'
+      keyPassword 'nightplus-debug'
+      storeFile file('/Users/harry/Android/NightPlus/keystore/nightplus-debug.keystore')
+      storePassword 'nightplus-debug'
     }
     release {
       storeFile

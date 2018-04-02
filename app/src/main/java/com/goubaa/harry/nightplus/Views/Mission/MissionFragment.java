@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.goubaa.harry.nightplus.Base.BaseEntity;
 import com.goubaa.harry.nightplus.Base.BaseFragment;
 import com.goubaa.harry.nightplus.Base.BaseObserver;
@@ -79,7 +80,7 @@ public class MissionFragment extends BaseFragment implements ViewPager.OnPageCha
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
-
+    SDKInitializer.initialize(SessionApplication.mContext);
   }
 
   @Override

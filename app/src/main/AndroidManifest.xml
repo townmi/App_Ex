@@ -18,6 +18,8 @@
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+  <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
   <application
     android:name=".SessionApplication"
     android:allowBackup="true"
@@ -25,6 +27,9 @@
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true">
+    <meta-data
+      android:name="com.baidu.lbsapi.API_KEY"
+      android:value="eF6MQQSYqtvHoQnXmRrtorL71wcucfuQ" />
     <activity
       android:name=".Views.Launch"
       android:label="@string/app_name"
@@ -52,8 +57,19 @@
     <activity
       android:name=".Views.BuyerPostInfo.BuyerPostInfo"
       android:launchMode="singleTop"
-      android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <activity
+      android:name=".Views.UserCenter.UserCenter"
+      android:launchMode="singleTop"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <activity
+      android:name=".Views.Location.Location"
+      android:launchMode="singleTop"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <activity
+      android:name=".Views.Login"
+      android:launchMode="singleTop"
+      android:theme="@style/loginTheme" />
   </application>
 
 </manifest>

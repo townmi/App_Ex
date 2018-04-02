@@ -172,18 +172,4 @@ public class ExploresFragment extends BaseFragment implements ViewPager.OnPageCh
     return "动态";
   }
 
-
-  private void getStudents() {
-
-    Observable<BaseEntity<City>> observable = RetrofitFactory.getInstance().getCities();
-    observable.compose(compose(this.<BaseEntity<City>>bindToLifecycle())).subscribe(new
-                                                                                      BaseObserver<City>(getContext()) {
-      @Override
-      protected void onHandleSuccess(ArrayList<City> arrayList) {
-        City city;
-        String _id = "";
-      }
-    });
-  }
-
 }

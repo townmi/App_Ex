@@ -3,6 +3,7 @@ package com.goubaa.harry.nightplus.Library;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -10,6 +11,10 @@ import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -76,7 +81,7 @@ public class Utils {
   /**
    * getPhoneIMEI 获取手机电话信息
    *
-   * @param context         Context
+   * @param context          Context
    * @param buildInformation HashMap
    */
   public static void getPhoneIMEI(Context context, HashMap buildInformation) {
@@ -107,12 +112,13 @@ public class Utils {
   /**
    * getMacAddress 获取MAC 地址
    *
-   * @param context         Context
+   * @param context          Context
    * @param buildInformation HashMap
    */
   public static void getMacAddress(Context context, HashMap buildInformation) {
     String macAddress = null;
-    WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService
+      (Context.WIFI_SERVICE);
     WifiInfo wifiInfo = (null == wifiManager ? null : wifiManager.getConnectionInfo());
 
     if (wifiInfo.getMacAddress().equals(marshmallowMacAddress)) {
@@ -255,5 +261,33 @@ public class Utils {
       LogUtil.error(e.getMessage());
     }
     return versionName;
+  }
+
+  /**
+   * setListViewHeightBasedOnChildren ScrollView 嵌套 ListView 内容显示不全
+   *
+   * @param listView
+   */
+  public static void setListViewHeightBasedOnChildren(ListView listView) {
+    ListAdapter listAdapter = listView.getAdapter();
+
+    if (listAdapter == null) {
+      return;
+    }
+
+
+    int totalHeight = 0;
+    for (int i = 0, len = listAdapter.getCount(); i < len; i++) {   //listAdapter.getCount()返回数据项的数目
+      View listItem = listAdapter.getView(i, null, listView);
+      listItem.measure(0, 0);  //计算子项View 的宽高
+      totalHeight += listItem.getMeasuredHeight();  //统计所有子项的总高度
+    }
+
+    ViewGroup.LayoutParams params = listView.getLayoutParams();
+    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+    //listView.getDividerHeight()获取子项间分隔符占用的高度
+    //params.height最后得到整个ListView完整显示需要的高度
+    listView.setLayoutParams(params);
+
   }
 }

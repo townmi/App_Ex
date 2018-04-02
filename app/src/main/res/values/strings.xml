@@ -22,6 +22,16 @@
 
   <string name="me_wallet">钱包</string>
 
+
+  <string name="explore_items_all">全部</string>
+  <string name="explore_items_music">音乐</string>
+  <string name="explore_items_drink">酒饮</string>
+  <string name="explore_items_event">玩乐</string>
+  <string name="explore_items_party">派对</string>
+  <string name="explore_items_lifestyle">潮流</string>
+
+  <string name="location_title">选择城市</string>
+
   <!-- ICONS -->
   <string name="ion_arrow_left">&#xf170;</string>
   <string name="ion_comment">&#xf16f;</string>
